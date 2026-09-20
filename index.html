@@ -1,0 +1,3961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Parallax Island, Underwater & Expedition Packages — XcurseWay Travels</title>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<!-- Font Awesome 6 CDN for WhatsApp and Card Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<!-- GSAP for 3D Depth Carousel Physics -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+<style>
+  :root {
+    --card-width: clamp(18.5rem, 4vw + 18rem, 22rem);
+    --gutter: 2rem;
+    --card-bg: rgba(17, 18, 21, 0.78);
+    --card-inner-bg: rgba(7, 8, 10, 0.85);
+    --badge-bg: rgba(8, 8, 10, 0.9);
+    --badge-border: #17181c;
+    --border: rgba(255, 255, 255, 0.12);
+    --border-inner: rgba(255, 255, 255, 0.08);
+    --border-active: rgba(255, 255, 255, 0.35);
+    --divider: rgba(255, 255, 255, 0.12);
+    --text-main: #f4f4f5;
+    --text-muted: #71717a;
+    --text-desc: #8e8e93;
+  }
+
+  *{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    -webkit-tap-highlight-color: transparent !important;
+  }
+
+  /* Block user from dragging and downloading website images */
+  img {
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    user-drag: none;
+    -webkit-touch-callout: none;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  /* Completely hide scrollbars across all browsers */
+  html, body {
+    width:100%;
+    min-height:100%;
+    overflow-x:hidden;
+    background:#000;
+    scrollbar-width:none;
+    -ms-overflow-style:none;
+  }
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar {
+    display:none;
+    width:0;
+    height:0;
+  }
+
+  body{
+    font-family:'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+
+  /* ========================================================
+     SPLASH / LOADING SCREEN
+     ======================================================== */
+  #splashScreen{
+    position:fixed;
+    inset:0;
+    width:100vw;
+    height:100vh;
+    background:#ffffff;
+    z-index:99999;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    transition:opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.8s ease;
+    user-select:none;
+  }
+  #splashScreen.loaded{
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+  }
+  .splash-brand{
+    font-family:'Dancing Script', cursive, sans-serif;
+    font-size:clamp(2.8rem, 6.2vw, 4.6rem);
+    font-weight:700;
+    letter-spacing:0.02em;
+    text-transform:none;
+    background:linear-gradient(135deg, #0052cc 0%, #0099ff 50%, #00b4d8 100%);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    text-align:center;
+    text-shadow:0 12px 30px rgba(0, 102, 255, 0.15);
+    animation:splashPulse 2.4s ease-in-out infinite alternate;
+  }
+  .splash-subtitle{
+    margin-top:10px;
+    font-size:clamp(0.85rem, 1.8vw, 1.15rem);
+    font-weight:500;
+    letter-spacing:0.28em;
+    text-transform:uppercase;
+    color:#4a6582;
+    opacity:0.85;
+  }
+  .splash-loader{
+    margin-top:18px;
+    width:clamp(184px, 44vw, 264px);
+    height:clamp(184px, 44vw, 264px);
+    display:block;
+  }
+  /* Splash progress bar (theme-matched) */
+  .splash-progress-wrap{position:absolute;bottom:45px;width:100%;padding:0 35px;display:flex;justify-content:center}
+  .splash-progress-bar{position:relative;width:100%;max-width:320px;height:28px;background:#eef2f7;border-radius:20px;box-shadow:inset 3px 3px 8px rgba(15,40,80,.14),inset -3px -3px 8px rgba(255,255,255,.9);border:1px solid rgba(0,82,204,.18);padding:3px;display:flex;align-items:center;overflow:hidden}
+  .splash-progress-fill{height:100%;width:0%;background:linear-gradient(135deg,#0052cc 0%,#0099ff 50%,#00b4d8 100%);border-radius:16px;box-shadow:2px 2px 6px rgba(0,153,255,.3);transition:width .15s linear}
+  .splash-progress-percent{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:.82em;font-weight:800;letter-spacing:.5px;z-index:5;pointer-events:none;background:linear-gradient(135deg,#0052cc,#0099ff);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;transition:color .2s linear,-webkit-text-fill-color .2s linear}
+  .splash-progress-percent.reached{background:none!important;-webkit-background-clip:initial!important;background-clip:initial!important;-webkit-text-fill-color:#fff!important;color:#fff!important}
+  @keyframes splashPulse{
+    0%{transform:scale(0.98);filter:brightness(1)}
+    100%{transform:scale(1.02);filter:brightness(1.15)}
+  }
+
+  /* Common Parallax Layers */
+  .layer{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    pointer-events:none;
+    user-select:none;
+  }
+  .layer img{
+    position:absolute;
+    display:block;
+    pointer-events:none;
+    user-select:none;
+    -webkit-user-drag:none;
+  }
+
+  /* ========================================================
+     SECTION 1 — HERO (ORIGINAL LIQUID BUTTONS RESTORED)
+     ======================================================== */
+  .hero{
+    position:relative;
+    width:100%;
+    height:100svh;
+    min-height:560px;
+    overflow:hidden;
+    isolation:isolate;
+    z-index:1;
+    background:linear-gradient(180deg, #0075FF 0%, #4da0ff 48%, #B4D2F0 85%);
+    cursor:grab;
+  }
+  .hero:active{
+    cursor:grabbing;
+  }
+
+  .sun{z-index:2}
+  .sun img{
+    left:-5.5%;
+    bottom:17%;
+    width:clamp(90px, 12vw, 160px);
+    height:auto;
+    object-fit:contain;
+    filter:brightness(1.22) saturate(0.5) contrast(1.08) drop-shadow(0 0 40px rgba(255, 255, 255, 0.95));
+    will-change:transform;
+  }
+
+  .cloud-canvas-layer {
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    z-index:3;
+    pointer-events:none;
+  }
+  #cloud-canvas {
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    display:block;
+  }
+
+  .island{z-index:4}
+  .island img{
+    width:50%;
+    height:auto;
+    left:25%;
+    bottom:12%;
+    object-fit:contain;
+    object-position:center bottom;
+    will-change:transform;
+  }
+
+  .trees{z-index:5}
+  .trees img{
+    width:118%;
+    height:auto;
+    left:-9%;
+    bottom:5.5%;
+    object-fit:contain;
+    object-position:center bottom;
+    will-change:transform;
+  }
+
+  .ocean{z-index:6}
+  .ocean img{
+    width:100%;
+    height:auto;
+    left:0;
+    bottom:0;
+    object-fit:contain;
+    object-position:center bottom;
+  }
+
+  .boat{z-index:7}
+  .boat-wrapper{
+    position:absolute;
+    left:8%;
+    bottom:0;
+    width:clamp(95px, 13vw, 185px);
+    will-change:transform;
+    transform-origin:center bottom;
+  }
+  .boat-shadow{
+    position:absolute;
+    bottom:-3px;
+    left:5%;
+    width:90%;
+    height:16px;
+    background:radial-gradient(ellipse at center, rgba(1, 32, 58, 0.85) 0%, rgba(2, 45, 80, 0.45) 50%, transparent 75%);
+    border-radius:50%;
+    filter:blur(3px);
+    pointer-events:none;
+    transform:skewX(-8deg);
+  }
+  .boat-wrapper img{
+    position:relative;
+    width:100%;
+    height:auto;
+    display:block;
+    filter:drop-shadow(0 8px 12px rgba(0, 36, 68, 0.55));
+  }
+
+  .eagle{z-index:8}
+  .eagle img{
+    width:clamp(140px, 15vw, 240px);
+    height:auto;
+    left:18%;
+    top:22%;
+    transform-origin:center center;
+    will-change:transform;
+  }
+
+  .top-tree{z-index:9}
+  .top-tree img{
+    top:-2%;
+    right:-1%;
+    width:clamp(500px, 75vw, 1180px);
+    height:auto;
+    object-fit:contain;
+    object-position:top right;
+    will-change:transform;
+  }
+
+  .hero-center-content{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%, -50%);
+    z-index:15;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    width:100%;
+    max-width:850px;
+    padding:0 20px;
+    pointer-events:none;
+    user-select:none;
+  }
+
+  .hero-brand-title{
+    font-family:'Dancing Script', cursive, -apple-system, sans-serif;
+    font-size:clamp(3.4rem, 7.8vw, 6.2rem);
+    font-weight:700;
+    letter-spacing:0.02em;
+    text-transform:none;
+    color:#ffffff;
+    text-align:center;
+    line-height:1.12;
+    background:linear-gradient(180deg, #ffffff 45%, #e6f5ff 75%, #bae6fd 100%);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    filter:drop-shadow(0 4px 18px rgba(0, 20, 60, 0.75)) drop-shadow(0 0 28px rgba(255, 255, 255, 0.45));
+  }
+
+  .hero-brand-subtitle{
+    margin-top:6px;
+    margin-bottom:34px;
+    font-size:clamp(0.85rem, 1.9vw, 1.25rem);
+    font-weight:600;
+    letter-spacing:0.26em;
+    text-transform:uppercase;
+    color:#e1f4ff;
+    text-align:center;
+    text-shadow:0 2px 14px rgba(0, 24, 70, 0.85);
+  }
+
+  .hero-buttons-container{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:22px;
+    width:100%;
+    pointer-events:auto;
+  }
+
+  .liquid-btn {
+    position:relative;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding:16px 38px;
+    font-size:1.05rem;
+    font-weight:700;
+    letter-spacing:0.05em;
+    color:#ffffff;
+    text-decoration:none;
+    cursor:pointer;
+    border:1px solid rgba(135, 206, 255, 0.55);
+    outline:none;
+    border-radius:100px;
+    background:rgba(0, 120, 255, 0.50);
+    backdrop-filter:blur(22px) saturate(190%);
+    -webkit-backdrop-filter:blur(22px) saturate(190%);
+    box-shadow:
+      0 20px 40px -6px rgba(0, 140, 255, 0.55),
+      inset 0 1px 3px 0 rgba(255, 255, 255, 0.85),
+      inset 0 -1px 3px 0 rgba(0, 0, 0, 0.4);
+    transition:all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    overflow:hidden;
+    user-select:none;
+    text-align:center;
+    white-space:nowrap;
+  }
+
+  .liquid-btn::before {
+    content:'';
+    position:absolute;
+    inset:-2px;
+    border-radius:inherit;
+    background:linear-gradient(135deg, rgba(255, 255, 255, 0.65), rgba(0, 210, 255, 0.55), rgba(255, 255, 255, 0.15));
+    mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite:xor;
+    mask-composite:exclude;
+    padding:1.5px;
+    pointer-events:none;
+    transition:opacity 0.4s ease;
+  }
+
+  .liquid-btn::after {
+    content:'';
+    position:absolute;
+    top:-50%;
+    left:-60%;
+    width:220%;
+    height:200%;
+    background:radial-gradient(ellipse at center, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0) 65%);
+    transform:rotate(25deg);
+    opacity:0.35;
+    transition:opacity 0.5s ease, transform 0.6s ease;
+    pointer-events:none;
+  }
+
+  .liquid-btn:hover {
+    transform:translateY(-4px) scale(1.05);
+    background:linear-gradient(135deg, rgba(0, 160, 255, 0.72) 0%, rgba(0, 220, 255, 0.65) 100%);
+    border-color:rgba(255, 255, 255, 0.9);
+    box-shadow:
+      0 26px 52px -6px rgba(0, 180, 255, 0.82),
+      0 0 30px rgba(0, 225, 255, 0.55),
+      inset 0 2px 4px 0 rgba(255, 255, 255, 0.95),
+      inset 0 -2px 4px 0 rgba(0, 50, 120, 0.5);
+    color:#ffffff;
+  }
+
+  .liquid-btn:hover::after {
+    opacity:1;
+    transform:rotate(25deg) translateY(-25%) scale(1.15);
+  }
+
+  .liquid-btn:active {
+    transform:translateY(1px) scale(0.98);
+    box-shadow:
+      0 10px 24px -4px rgba(0, 80, 200, 0.6),
+      inset 0 2px 4px rgba(0, 0, 0, 0.4);
+  }
+
+  /* ========================================================
+     TRANSITION OVERLAY LAYER 1 (UPPER CENTER)
+     ======================================================== */
+  .transition-layer{
+    position:relative;
+    width:100%;
+    height:0;
+    z-index:100;
+    pointer-events:none;
+    overflow:visible;
+  }
+  .uw-center-wrapper{
+    position:absolute;
+    top:5.5vh;
+    left:50%;
+    transform:translate(-50%, -50%);
+    width:120vw;
+    min-width:120vw;
+    display:flex;
+    justify-content:center;
+    pointer-events:none;
+    will-change:transform, opacity;
+    opacity:0.65;
+  }
+  .uw-center-inner{
+    position:relative;
+    display:inline-block;
+    width:120vw;
+    min-width:120vw;
+  }
+  .uw-center-wrapper img{
+    position:relative;
+    width:120vw !important;
+    min-width:120vw !important;
+    max-width:none !important;
+    height:auto;
+    object-fit:contain;
+    object-position:center center;
+    display:block;
+    will-change:transform;
+    filter:drop-shadow(0 14px 28px rgba(0, 18, 42, 0.45));
+  }
+
+  .uw-center-filter-tint{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    pointer-events:none;
+    z-index:2;
+    mix-blend-mode:color;
+    background:radial-gradient(circle at 50% 35%, rgba(0, 160, 255, 0.85) 0%, rgba(0, 60, 145, 0.95) 100%);
+    -webkit-mask-image:url("https://ik.imagekit.io/lssafvcmr/projects/Topo%20Sir/Sec2/uppercenter.webp");
+    -webkit-mask-size:contain;
+    -webkit-mask-repeat:no-repeat;
+    -webkit-mask-position:center center;
+    mask-image:url("https://ik.imagekit.io/lssafvcmr/projects/Topo%20Sir/Sec2/uppercenter.webp");
+    mask-size:contain;
+    mask-repeat:no-repeat;
+    mask-position:center center;
+    opacity:0;
+    will-change:opacity;
+  }
+
+  .uw-center-filter-depth{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    pointer-events:none;
+    z-index:3;
+    mix-blend-mode:soft-light;
+    background:linear-gradient(180deg, rgba(0, 110, 200, 0.6) 0%, rgba(1, 18, 48, 0.85) 100%);
+    -webkit-mask-image:url("https://ik.imagekit.io/lssafvcmr/projects/Topo%20Sir/Sec2/uppercenter.webp");
+    -webkit-mask-size:contain;
+    -webkit-mask-repeat:no-repeat;
+    -webkit-mask-position:center center;
+    mask-image:url("https://ik.imagekit.io/lssafvcmr/projects/Topo%20Sir/Sec2/uppercenter.webp");
+    mask-size:contain;
+    mask-repeat:no-repeat;
+    mask-position:center center;
+    opacity:0;
+    will-change:opacity;
+  }
+
+  /* ========================================================
+     SECTION 2 — UNDERWATER SECTION
+     ======================================================== */
+  .underwater{
+    position:relative;
+    margin-bottom:-1px;
+    width:100%;
+    height:100svh;
+    min-height:760px;
+    overflow:hidden;
+    isolation:isolate;
+    z-index:2;
+    background:#011b33;
+  }
+
+  .uw-content-stack {
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%, -50%);
+    width:100%;
+    max-width:1200px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    z-index:22;
+    pointer-events:none;
+    padding:0 20px;
+  }
+
+  @media (min-width: 769px) {
+    .uw-content-stack {
+      padding-top: 45px;
+    }
+    .uw-packages-header {
+      margin-top: 25px;
+      margin-bottom: 24px;
+    }
+  }
+
+  .uw-packages-header {
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    margin-bottom:14px;
+    pointer-events:none;
+    user-select:none;
+    will-change:transform, opacity, filter;
+    opacity:0;
+    filter:blur(16px);
+  }
+
+  .uw-packages-badge{
+    display:inline-block;
+    padding:6px 18px;
+    margin-bottom:10px;
+    font-size:clamp(0.72rem, 1.1vw, 0.85rem);
+    font-weight:800;
+    letter-spacing:0.25em;
+    text-transform:uppercase;
+    color:#ffffff;
+    background:rgba(255, 255, 255, 0.20);
+    border:1px solid rgba(255, 255, 255, 0.65);
+    border-radius:50px;
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    box-shadow:0 4px 14px rgba(0, 0, 0, 0.35);
+    text-shadow:0 1px 3px rgba(0, 0, 0, 0.6);
+  }
+
+  .uw-packages-title {
+    font-family:'Dancing Script', cursive, sans-serif;
+    font-size:clamp(2.1rem, 4.2vw, 3.4rem);
+    font-weight:700;
+    letter-spacing:0.02em;
+    line-height:1.15;
+    color:#ffffff;
+    text-transform:none;
+    background:linear-gradient(135deg, #ffffff 40%, #e0f4ff 70%, #90d8ff 100%);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    filter:drop-shadow(0 6px 18px rgba(0, 24, 60, 0.9));
+  }
+
+  .uw-packages-desc{
+    margin-top:6px;
+    font-size:clamp(0.82rem, 1.3vw, 0.98rem);
+    font-weight:400;
+    color:#e0f2fe;
+    letter-spacing:0.04em;
+    line-height:1.45;
+    max-width:540px;
+    text-align:center;
+    text-shadow:0 2px 10px rgba(0, 15, 40, 0.9);
+  }
+
+  /* 3D Depth Carousel Container */
+  .uw-carousel-container {
+    position:relative;
+    width:100%;
+    max-width:1040px;
+    height:470px;
+    pointer-events:auto;
+  }
+
+  .depth-carousel {
+    position:relative;
+    width:100%;
+    height:100%;
+    min-height:360px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    perspective:var(--dc-perspective, 1500px);
+    perspective-origin:50% 50%;
+    touch-action:pan-y;
+    outline:none;
+    user-select:none;
+    -webkit-user-select:none;
+    cursor:grab;
+  }
+
+  .depth-carousel:active {
+    cursor:grabbing;
+  }
+
+  .depth-carousel__stage {
+    position:absolute;
+    inset:0;
+    transform-style:preserve-3d;
+  }
+
+  .depth-carousel__card {
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform-origin:center center;
+    overflow:hidden;
+    background:#051424;
+    box-shadow:
+      0 24px 50px -12px rgba(0, 10, 25, 0.85),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+    backface-visibility:hidden;
+    -webkit-backface-visibility:hidden;
+    will-change:transform, opacity;
+    cursor:pointer;
+    transform:translate(-50%, -50%);
+    transition:box-shadow 0.25s ease;
+  }
+
+  .depth-carousel__card:hover {
+    box-shadow:
+      0 30px 60px -10px rgba(0, 8, 20, 0.95),
+      inset 0 0 0 1.5px rgba(255, 255, 255, 0.5);
+  }
+
+  .depth-carousel__img {
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+    pointer-events:none;
+    -webkit-user-drag:none;
+  }
+
+  .depth-carousel__tint {
+    position:absolute;
+    inset:0;
+    opacity:0;
+    background:#010e1c;
+    pointer-events:none;
+    will-change:opacity;
+  }
+
+  .depth-carousel__arrow {
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    z-index:3000;
+    width:48px;
+    height:48px;
+    display:grid;
+    place-items:center;
+    border:1px solid rgba(255, 255, 255, 0.35);
+    border-radius:999px;
+    background:rgba(5, 25, 50, 0.65);
+    backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px);
+    color:#ffffff;
+    cursor:pointer;
+    box-shadow:0 8px 24px rgba(0, 0, 0, 0.5);
+    transition:transform 0.25s ease, background 0.25s ease;
+  }
+
+  .depth-carousel__arrow:hover {
+    background:rgba(255, 255, 255, 0.25);
+    transform:translateY(-50%) scale(1.08);
+  }
+
+  .depth-carousel__arrow:active {
+    transform:translateY(-50%) scale(0.94);
+  }
+
+  .depth-carousel__arrow--prev {
+    left:10px;
+  }
+
+  .depth-carousel__arrow--next {
+    right:10px;
+  }
+
+  .depth-carousel__dots {
+    position:absolute;
+    bottom:12px;
+    left:50%;
+    transform:translateX(-50%);
+    z-index:3000;
+    display:flex;
+    gap:10px;
+    padding:8px 16px;
+    border-radius:999px;
+    border:1px solid rgba(255, 255, 255, 0.25);
+    background:rgba(2, 18, 38, 0.7);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    box-shadow:0 6px 20px rgba(0, 0, 0, 0.4);
+  }
+
+  @media (min-width: 769px) {
+    .depth-carousel__dots {
+      bottom:-18px;
+      gap:14px;
+      padding:10px 20px;
+    }
+  }
+
+  .depth-carousel__dot {
+    width:8px;
+    height:8px;
+    padding:0;
+    border:none;
+    border-radius:999px;
+    background:rgba(255, 255, 255, 0.4);
+    cursor:pointer;
+    transition:width 0.25s ease, background 0.25s ease;
+  }
+
+  .depth-carousel__dot.is-active {
+    width:24px;
+    background:#ffffff;
+  }
+
+  .underwater-bg{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    z-index:1;
+    pointer-events:none;
+    user-select:none;
+  }
+  .underwater-bg img{
+    width:100%;
+    height:100%;
+    min-height:100svh;
+    object-fit:cover;
+    object-position:center center;
+    display:block;
+  }
+
+  .uw-fish{z-index:2}
+  .uw-fish img{
+    right:4%;
+    left:auto;
+    top:38%;
+    width:clamp(160px, 22vw, 380px);
+    height:auto;
+    object-fit:contain;
+    opacity:0.75;
+    filter:drop-shadow(0 6px 14px rgba(0, 15, 30, 0.45));
+    will-change:transform;
+  }
+
+  .uw-person{z-index:3}
+  .uw-person img{
+    left:4%;
+    bottom:6%;
+    top:auto;
+    width:clamp(360px, 45vw, 830px);
+    height:auto;
+    object-fit:contain;
+    filter:drop-shadow(0 16px 36px rgba(0, 10, 24, 0.7));
+    will-change:transform;
+  }
+
+  .uw-bottom-left{z-index:4}
+  .uw-bottom-left img{
+    bottom:-2%;
+    left:-1%;
+    width:clamp(620px, 82vw, 1450px);
+    height:auto;
+    object-fit:contain;
+    object-position:bottom left;
+    will-change:transform;
+  }
+
+  .uw-bottom-right{z-index:4}
+  .uw-bottom-right img{
+    bottom:-2%;
+    right:-1%;
+    width:clamp(620px, 82vw, 1450px);
+    height:auto;
+    object-fit:contain;
+    object-position:bottom right;
+    will-change:transform;
+  }
+
+  .uw-top-left{z-index:5}
+  .uw-top-left img{
+    top:-2%;
+    left:-1%;
+    width:clamp(825px, 108vw, 1875px);
+    height:auto;
+    object-fit:contain;
+    object-position:top left;
+    will-change:transform;
+  }
+
+  .uw-top-right{z-index:5}
+  .uw-top-right img{
+    top:-2%;
+    right:-1%;
+    width:clamp(600px, 84vw, 1380px);
+    height:auto;
+    object-fit:contain;
+    object-position:top right;
+    will-change:transform;
+  }
+
+  .underwater-filter-overlay{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    pointer-events:none;
+    z-index:50;
+    mix-blend-mode:color;
+    background:radial-gradient(circle at 50% 35%, rgba(0, 160, 255, 0.85) 0%, rgba(0, 60, 145, 0.95) 100%);
+    opacity:0;
+    will-change:opacity;
+  }
+
+  .underwater-depth-overlay{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    pointer-events:none;
+    z-index:51;
+    mix-blend-mode:soft-light;
+    background:linear-gradient(180deg, rgba(0, 110, 200, 0.6) 0%, rgba(1, 18, 48, 0.85) 100%);
+    opacity:0;
+    will-change:opacity;
+  }
+
+  /* ========================================================
+     TRANSITION OVERLAY LAYER 2 (TREE STEM DIVIDER)
+     - Shifted down 12%
+     - Slower smooth downward glide
+     - Blue filter removed completely
+     ======================================================== */
+  .transition-layer-sec3{
+    position:relative;
+    width:100%;
+    height:0;
+    z-index:150;
+    pointer-events:none;
+    overflow:visible;
+  }
+  .treestem-wrapper{
+    position:absolute;
+    top:12%;
+    left:50%;
+    transform:translate(-50%, -50%);
+    width:100vw;
+    min-width:100vw;
+    display:flex;
+    justify-content:center;
+    pointer-events:none;
+    will-change:transform;
+  }
+  .treestem-inner {
+    position:relative;
+    width:100vw;
+    min-width:100vw;
+  }
+  .treestem-wrapper img{
+    position:relative;
+    width:100vw !important;
+    min-width:100vw !important;
+    max-width:100vw !important;
+    height:auto;
+    object-fit:cover;
+    object-position:center top;
+    display:block;
+    will-change:transform, filter;
+  }
+
+  /* ========================================================
+     SECTION 3 — COASTAL BEACH SECTION
+     Layer 1: Background (New URL: section3bg.webp)
+     Layer 2: Ocean (Docked at bottom, stops parallax)
+     Layer 3: Girl (Beach left side)
+     Layer 4: Tree Stem Divider (Top)
+     Layer 5: Our Packages Horizontal Card Showcase
+     ======================================================== */
+  .section3{
+    position:relative;
+    margin-top:-1px;
+    width:100%;
+    min-height:100svh;
+    overflow:hidden;
+    isolation:isolate;
+    z-index:3;
+    background:#081420;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:80px 0 100px 0;
+  }
+
+  .sec3-bg{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    z-index:1;
+    pointer-events:none;
+  }
+  .sec3-bg img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center center;
+    display:block;
+  }
+
+  .sec3-ocean{
+    position:absolute;
+    left:0;
+    bottom:0;
+    width:100vw;
+    z-index:2;
+    pointer-events:none;
+    will-change:transform;
+    display:flex;
+    justify-content:center;
+  }
+  .sec3-ocean::after{
+    content:"";
+    position:absolute;
+    inset:auto 0 0;
+    height:32%;
+    background:linear-gradient(to bottom,transparent,rgba(0,0,0,.72));
+    pointer-events:none;
+  }
+  .sec3-ocean img{
+    width:100vw !important;
+    min-width:100vw !important;
+    max-width:100vw !important;
+    height:auto;
+    object-fit:cover;
+    object-position:center bottom;
+    display:block;
+  }
+
+  .sec3-girl{
+    position:absolute;
+    left:4%;
+    bottom:3%;
+    z-index:3;
+    pointer-events:none;
+    will-change:transform;
+  }
+  .sec3-girl img{
+    width:clamp(220px, 28vw, 460px);
+    height:auto;
+    object-fit:contain;
+    display:block;
+    filter:drop-shadow(0 12px 24px rgba(0, 8, 20, 0.65));
+  }
+
+  /* ========================================================
+     OUR PACKAGES INTEGRATION IN SECTION 3
+     ======================================================== */
+  .sec3-content-wrap {
+    position:relative;
+    z-index:20;
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    pointer-events:auto;
+  }
+
+  .sec3-packages-header {
+    text-align:center;
+    margin-bottom:1.5rem;
+    padding:0 20px;
+    user-select:none;
+  }
+
+  .sec3-packages-badge{
+    display:inline-block;
+    padding:6px 20px;
+    margin-bottom:10px;
+    font-size:clamp(0.72rem, 1.1vw, 0.85rem);
+    font-weight:800;
+    letter-spacing:0.25em;
+    text-transform:uppercase;
+    color:#ffffff;
+    background:rgba(255, 255, 255, 0.18);
+    border:1px solid rgba(255, 255, 255, 0.6);
+    border-radius:50px;
+    backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px);
+    box-shadow:0 4px 14px rgba(0, 0, 0, 0.35);
+  }
+
+  .sec3-packages-title {
+    font-family:'Dancing Script', cursive, sans-serif;
+    font-size:clamp(2.3rem, 4.5vw, 3.8rem);
+    font-weight:700;
+    letter-spacing:0.02em;
+    line-height:1.15;
+    color:#ffffff;
+    text-transform:none;
+    background:linear-gradient(135deg, #ffffff 40%, #e0f4ff 70%, #90d8ff 100%);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    filter:drop-shadow(0 6px 18px rgba(0, 24, 60, 0.9));
+  }
+
+  .sec3-packages-desc{
+    margin-top:6px;
+    font-size:clamp(0.84rem, 1.3vw, 1rem);
+    font-weight:400;
+    color:#e0f2fe;
+    letter-spacing:0.03em;
+    line-height:1.45;
+    max-width:560px;
+    margin-left:auto;
+    margin-right:auto;
+    text-shadow:0 2px 10px rgba(0, 15, 40, 0.9);
+  }
+
+  /* Horizontal Card Scroller */
+  .scroll-x {
+    width: 100%;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    padding: 1.5rem 0 2.5rem 0;
+    cursor: grab;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .scroll-x::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scroll-x:active {
+    cursor: grabbing;
+  }
+
+  .items {
+    display: flex;
+    gap: var(--gutter);
+    list-style: none;
+    width: max-content;
+    padding: 0 calc(50vw - (var(--card-width) / 2));
+    align-items: center;
+  }
+
+  /* Card Outer Frame with subtle back-blur */
+  .items li {
+    position: relative;
+    flex: 0 0 var(--card-width);
+    scroll-snap-align: center;
+    background: var(--card-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 1.15rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    transform: scale(0.88);
+    opacity: 0.42;
+    transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
+                opacity 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
+                border-color 0.5s ease;
+    will-change: transform, opacity;
+  }
+
+  .items li.active {
+    transform: scale(1.04);
+    opacity: 1;
+    border-color: var(--border-active);
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.65);
+    z-index: 2;
+  }
+
+  .parallax-layer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    width: 100%;
+    will-change: transform;
+    transition: transform 0.08s linear;
+  }
+
+  .card-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    padding: 0.15rem 0.2rem 0.25rem 0.2rem;
+  }
+
+  .header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .plan-name {
+    font-size: 0.86rem;
+    font-weight: 600;
+    color: #ffffff;
+  }
+
+  .badge {
+    background: var(--badge-bg);
+    border: 1px solid var(--badge-border);
+    color: #a1a1aa;
+    font-size: 0.58rem;
+    font-weight: 600;
+    padding: 0.18rem 0.55rem;
+    border-radius: 9999px;
+  }
+
+  .price-row {
+    display: flex;
+    align-items: baseline;
+    gap: 0.38rem;
+    margin-top: 0.15rem;
+  }
+
+  .price {
+    font-size: 1.56rem;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: -0.03em;
+  }
+
+  .billing-cycle {
+    font-size: 0.66rem;
+    color: var(--text-muted);
+  }
+
+  .plan-desc {
+    font-size: 0.66rem;
+    color: var(--text-desc);
+    line-height: 1.45;
+    margin-top: 0.15rem;
+  }
+
+  .spec-box {
+    background: var(--card-inner-bg);
+    border: 1px solid var(--border-inner);
+    border-radius: 12px;
+    padding: 0.3rem 0.85rem;
+  }
+
+  .spec-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.52rem 0;
+    font-size: 0.67rem;
+    border-bottom: 1px solid var(--divider);
+  }
+
+  .spec-row:last-child {
+    border-bottom: none;
+  }
+
+  .spec-label {
+    color: var(--text-muted);
+  }
+
+  .spec-value {
+    color: var(--text-main);
+    font-weight: 500;
+  }
+
+  .features-box {
+    background: var(--card-inner-bg);
+    border: 1px solid var(--border-inner);
+    border-radius: 12px;
+    padding: 0.75rem 0.85rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .feature-item {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-size: 0.66rem;
+    color: #d4d4d8;
+  }
+
+  .feature-item svg {
+    width: 12px;
+    height: 12px;
+    stroke: #ffffff;
+    stroke-width: 2.5;
+    fill: none;
+    flex-shrink: 0;
+  }
+
+  .cta-btn {
+    width: 100%;
+    background: #ffffff;
+    color: #09090b;
+    border: none;
+    border-radius: 10px;
+    padding: 0.75rem 0.9rem;
+    font-size: 0.7rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    cursor: pointer;
+    margin-top: 0.15rem;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .cta-btn:hover {
+    background: #e4e4e7;
+    transform: translateY(-1px);
+  }
+
+  .cta-btn i.fa-brands.fa-whatsapp {
+    font-size: 0.85rem;
+    color: #09090b;
+  }
+
+  /* ========================================================
+     IMAGE FULLSCREEN LIGHTBOX
+     ======================================================== */
+  #imageLightbox {
+    position:fixed;
+    inset:0;
+    width:100vw;
+    height:100vh;
+    z-index:999999;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:rgba(2, 6, 12, 0.88);
+    backdrop-filter:blur(15px);
+    -webkit-backdrop-filter:blur(15px);
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+    transition:opacity 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), visibility 0.35s ease;
+    cursor:pointer;
+  }
+
+  #imageLightbox.active {
+    opacity:1;
+    visibility:visible;
+    pointer-events:auto;
+  }
+
+  .lightbox-close-btn {
+    position:fixed;
+    top:24px;
+    right:24px;
+    width:48px;
+    height:48px;
+    border-radius:50%;
+    border:1px solid rgba(255, 255, 255, 0.35);
+    background:rgba(255, 255, 255, 0.12);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    color:#ffffff;
+    cursor:pointer;
+    display:grid;
+    place-items:center;
+    z-index:1000000;
+    transition:transform 0.25s ease, background 0.25s ease;
+  }
+
+  .lightbox-close-btn:hover {
+    transform:scale(1.1) rotate(90deg);
+    background:rgba(255, 255, 255, 0.25);
+  }
+
+  .lightbox-content-wrap {
+    position:relative;
+    max-width:90vw;
+    max-height:88vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    pointer-events:auto;
+    cursor:default;
+  }
+
+  #lightboxImg {
+    max-width:88vw;
+    max-height:82vh;
+    object-fit:contain;
+    border-radius:14px;
+    box-shadow:0 25px 60px rgba(0, 0, 0, 0.95);
+    cursor:zoom-in;
+    transition:transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    transform-origin:center center;
+  }
+
+  #lightboxImg.is-zoomed {
+    transform:scale(1.65);
+    cursor:zoom-out;
+  }
+
+  .blank-section{
+    position:relative;
+    z-index:2;
+    width:100%;
+    height:50vh;
+    background:#040910;
+  }
+
+  @media (max-width:768px){
+    .underwater{min-height:700px}
+    .uw-content-stack{top:48%;padding:0 12px;}
+    .uw-carousel-container{height:410px;}
+    .hero{min-height:520px}
+    .hero-brand-title{font-size:clamp(2.8rem, 11vw, 4.4rem);line-height:1.1}
+    .sun img{left:-6.5%;bottom:15%;width:100px}
+    .island img{width:62%;left:19%;bottom:11%}
+    .trees img{bottom:6.5%;width:125%;left:-12%}
+    .boat-wrapper{width:100px;left:5%}
+    .eagle img{width:130px;left:10%;top:20%}
+    .top-tree img{width:clamp(380px, 88vw, 640px)}
+    .hero-brand-subtitle{margin-bottom:22px;letter-spacing:0.18em}
+
+    .uw-center-wrapper{top:4.5vh}
+    .uw-person img{width:clamp(225px, 46vw, 380px);bottom:4%;left:2%}
+    .uw-fish img{width:150px;top:40%}
+    .uw-bottom-left img{width:clamp(420px, 92vw, 750px)}
+    .uw-bottom-right img{width:clamp(420px, 92vw, 750px)}
+    .uw-top-left img{width:clamp(540px, 120vw, 930px)}
+    .uw-top-right img{width:clamp(420px, 99vw, 720px)}
+
+    .hero-buttons-container{
+      flex-direction:column;
+      gap:14px;
+      width:100%;
+    }
+    .liquid-btn{
+      width:75% !important;
+      padding:15px 18px;
+      font-size:1rem;
+    }
+
+    .sec3-girl img{
+      width:210px;
+      left:2%;
+      bottom:1%;
+    }
+    .lightbox-close-btn {
+      top:16px;
+      right:16px;
+      width:42px;
+      height:42px;
+    }
+  }
+
+
+  /* BLACK & WHITE CONTENT SECTIONS */
+  .mono-content{position:relative;z-index:4;background:#050505;color:#f7f7f7;font-family:'Plus Jakarta Sans',sans-serif;overflow:hidden}
+  .mono-section{padding:clamp(3.5rem,7vw,6rem) max(5vw,1.25rem);background:#050505;border-top:0}
+  .mono-section.mono-soft{background:#050505}
+  .mono-grid,.mono-reviews-layout,.mono-faq-layout{width:min(1120px,100%);margin:0 auto;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:clamp(2rem,6vw,5rem)}
+  .mono-art{display:flex;align-items:center;justify-content:center;min-width:0}
+  .mono-art.illustration-art{position:relative;overflow:hidden;transform:none!important;animation:none!important}
+  .mono-art.illustration-art img{transform:none!important;animation:none!important;transition:none!important;will-change:auto}
+  .mono-art.illustration-art::after{content:"";position:absolute;inset:auto 0 0;height:56%;background:linear-gradient(to bottom,transparent 0%,rgba(0,0,0,.72) 48%,rgba(0,0,0,1) 100%);pointer-events:none}
+  .mono-art img{display:block;width:min(100%,440px);height:auto}
+  .mono-heading{font-family:'Dancing Script',cursive,sans-serif;font-size:clamp(2.5rem,5vw,4.25rem);line-height:1.06;font-weight:700;letter-spacing:0;color:#fff;margin:0 0 1.75rem}
+  .mono-kicker{font-family:'Dancing Script',cursive,sans-serif;font-size:1.12rem;font-weight:700;letter-spacing:0;color:#bdbdbd;margin-bottom:.6rem}
+  .mono-copy{font-size:.88rem;line-height:1.8;color:#c8c8c8}
+  .mono-features{display:grid;gap:1.35rem}
+  .mono-feature{display:grid;grid-template-columns:2.8rem 1fr;gap:1rem;align-items:start}
+  .mono-icon{width:2.8rem;height:2.8rem;border:1px solid #777;border-radius:50%;display:grid;place-items:center;color:#fff;background:#111}
+  .mono-feature h3{font-family:'Dancing Script',cursive,sans-serif;font-size:1.35rem;font-weight:700;color:#fff;margin:0 0 .3rem}
+  .mono-plan-badge{width:5rem;height:5rem;border:1px solid #aaa;border-radius:50%;display:grid;place-items:center;flex:0 0 auto;font-size:1.2rem;color:#fff;animation:monoSpin 12s linear infinite}
+  .mono-plan-copy{display:flex;align-items:flex-start;gap:1.2rem}
+  @keyframes monoSpin{to{transform:rotate(360deg)}}
+  .mono-reviews-content,.mono-faq-content{min-width:0}
+  .mono-review-track{width:100%;margin-top:1.25rem;display:flex;gap:1rem;overflow-x:auto;scroll-snap-type:x mandatory;padding:.2rem 0 1rem;scrollbar-width:none;overscroll-behavior-x:contain}
+  .mono-review-track::-webkit-scrollbar{display:none}
+  .mono-review{position:relative;flex:0 0 min(310px,84vw);scroll-snap-align:start;border:1px solid var(--border-active);border-radius:20px;background:var(--card-bg);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);padding:1.4rem;overflow:hidden;transition:border-color .5s ease,box-shadow .5s ease}
+  .mono-review:hover{box-shadow:0 20px 45px rgba(0,0,0,.65)}
+  .mono-review-avatar{position:absolute;top:1rem;right:1rem;width:41.4px;height:41.4px;border-radius:50%;object-fit:cover;border:2px solid var(--border-active);box-shadow:0 4px 14px rgba(0,0,0,.5)}
+  .mono-stars{font-size:.78rem;letter-spacing:.15em;color:#ffc94d;margin-bottom:.7rem}
+  .mono-review blockquote{font-size:.8rem;line-height:1.7;color:#c8c8c8;font-style:italic;margin:0 0 1rem}
+  .mono-review strong{display:block;font-size:.78rem;color:#fff}
+  .mono-review span{font-size:.65rem;color:#999;font-weight:700}
+  .mono-faq-head{text-align:left;margin-bottom:2rem}
+  .faq-item-scaled{background:var(--card-bg);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid var(--border);border-radius:20px;margin-bottom:.65rem;overflow:hidden;transition:border-color .4s ease}
+  .faq-item-scaled:hover,.faq-item-scaled.active{border-color:var(--border-active)}
+  .faq-q-scaled{padding:1rem 1.1rem;display:flex;justify-content:space-between;align-items:center;gap:1rem;cursor:pointer;font-weight:750;font-size:.82rem;color:#fff}
+  .faq-q-scaled i{color:#fff;transition:transform .3s ease}
+  .faq-a-scaled{padding:0 1.1rem;max-height:0;opacity:0;overflow:hidden;transition:max-height .35s ease,padding .35s ease,opacity .25s ease;color:#c8c8c8;font-size:.75rem;line-height:1.65}
+  .faq-item-scaled.active .faq-a-scaled{padding:0 1.1rem 1rem;max-height:220px;opacity:1}
+  .faq-item-scaled.active .faq-q-scaled i{transform:rotate(180deg)}
+  .faqs-expand-wrapper{display:grid;grid-template-rows:0fr;opacity:0;transition:grid-template-rows .5s ease,opacity .35s ease}
+  .faqs-expand-wrapper.open{grid-template-rows:1fr;opacity:1}.faqs-expand-inner{overflow:hidden}
+  .more-faqs-btn-card{display:flex;align-items:center;justify-content:center;gap:.55rem;margin:1.25rem auto 0;border:1px solid #777;background:#050505;color:#fff;padding:.8rem 1.5rem;border-radius:999px;font:800 .75rem 'Plus Jakarta Sans';cursor:pointer;transition:background .2s,color .2s}
+  .more-faqs-btn-card:hover{background:#fff;color:#050505}
+  .mono-footer{position:relative;z-index:4;background:#050505;color:#aaa;padding:4rem max(5vw,1.25rem) 1.5rem;font-family:'Plus Jakarta Sans',sans-serif}
+  .mono-footer-grid{width:min(1200px,100%);margin:auto;display:grid;grid-template-columns:2fr 1fr 1.25fr;gap:2.5rem}
+  .mono-brand{display:flex;align-items:center;gap:.8rem;color:#fff;font-weight:900;font-size:1.15rem;margin-bottom:1rem}.mono-brand img{height:2.4rem;width:auto;filter:none;}
+  .mono-footer p,.mono-footer li{font-size:.72rem;line-height:1.75}.mono-footer h4{color:#fff;font-size:.72rem;text-transform:uppercase;letter-spacing:.13em;margin-bottom:1rem}.mono-footer ul{list-style:none;display:grid;gap:.55rem}.mono-footer a{color:#aaa;text-decoration:none}.mono-footer a:hover{color:#fff}
+  .mono-socials{display:flex;gap:.55rem;margin-top:1rem}.mono-socials a{width:2.25rem;height:2.25rem;border:1px solid #555;border-radius:50%;display:grid;place-items:center}.mono-socials a:hover{background:#fff;color:#050505}
+  .mono-contact li{display:flex;gap:.65rem;align-items:flex-start}.mono-contact i{color:#fff;margin-top:.25rem}.mono-copyright{width:min(1200px,100%);margin:2.5rem auto 0;padding-top:1.25rem;border-top:1px solid #333;text-align:center;font-size:.63rem;text-transform:uppercase;letter-spacing:.1em;color:#777}
+  .below-sec3-parallax{will-change:transform;transform:translate3d(0,0,0)}
+  @media(max-width:760px){.mono-grid,.mono-reviews-layout,.mono-faq-layout,.mono-footer-grid{grid-template-columns:1fr}.mono-grid,.mono-reviews-layout,.mono-faq-layout{gap:2rem}.mono-section{padding:3.5rem 1.25rem}.mono-heading{font-size:2.25rem}.mono-faq-head{text-align:center}.mono-footer-grid{gap:2rem}}
+
+  /* Circular loop text (Plan easy, Pay less) */
+  .circular-loop-wrap{position:relative;width:7.5rem;height:7.5rem;flex:0 0 auto;display:grid;place-items:center}
+  .circular-loop-text{position:absolute;inset:0;animation:monoSpin 14s linear infinite}
+  .circular-loop-text span{position:absolute;left:50%;top:50%;font-size:.62rem;font-weight:800;letter-spacing:.05em;color:#bdbdbd}
+  
+  .circular-loop-wrap .mono-plan-badge i{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:0;
+    line-height:1;
+  }
+  /* Split + Blur heading animation */
+  .split-blur-word{display:inline-block;white-space:nowrap}
+  .split-blur-char{display:inline-block;will-change:transform,filter,opacity}
+  /* Typewriter cursor */
+  .text-type-cursor{display:inline-block;margin-left:2px;color:#0099ff;font-weight:400;animation:blinkCursor .8s steps(1) infinite}
+  @keyframes blinkCursor{50%{opacity:0}}
+
+  #treestemImg{filter:brightness(.75);opacity:.9}
+  body.gallery-open{overflow:hidden;touch-action:none}
+  #imageLightbox{background:rgba(0,0,0,.94);backdrop-filter:none;-webkit-backdrop-filter:none;cursor:default;overscroll-behavior:contain}
+  .lightbox-content-wrap{width:100vw;height:100dvh;max-width:none;max-height:none;overflow:hidden;touch-action:none;cursor:grab;contain:strict}
+  .lightbox-content-wrap.is-dragging{cursor:grabbing}
+  #lightboxImg{max-width:92vw;max-height:88dvh;border-radius:8px;box-shadow:none;cursor:grab;transition:none;transform-origin:center center;will-change:transform;backface-visibility:hidden;user-select:none;touch-action:none}
+  #lightboxImg.is-zoomed{cursor:grab}
+  .lightbox-close-btn{background:rgba(0,0,0,.72);border-color:rgba(255,255,255,.55)}
+
+
+  /* Our Memories Tag: Top-left corner black theme */
+  .uw-carousel-badge, .memory-card-badge {
+    position: absolute !important;
+    top: 14px !important;
+    left: 14px !important;
+    bottom: auto !important;
+    right: auto !important;
+    background: rgba(0, 0, 0, 0.88) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.22) !important;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.6) !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+    padding: 6px 14px !important;
+    border-radius: 8px !important;
+    font-size: 0.72rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.08em !important;
+    text-transform: uppercase !important;
+    z-index: 15 !important;
+  }
+
+
+  /* Lightbox Rearranged Layout */
+  #imageLightbox {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 999999;
+    background: rgba(2, 6, 12, 0.94);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), visibility 0.35s ease;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 2.5rem 1.25rem;
+    box-sizing: border-box;
+  }
+  #imageLightbox.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+  .lightbox-scroll-container {
+    max-width: 1020px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: center;
+  }
+  .lightbox-banner-wrap {
+    width: 100%;
+    position: relative;
+    border-radius: 20px;
+    background: rgba(10, 14, 20, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    overflow: hidden;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
+  }
+  .lightbox-content-wrap {
+    width: 100%;
+    height: 56vh;
+    min-height: 380px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    cursor: grab;
+    position: relative;
+  }
+  .lightbox-content-wrap.is-dragging { cursor: grabbing; }
+  #lightboxImg {
+    max-width: 95%;
+    max-height: 95%;
+    object-fit: contain;
+    border-radius: 12px;
+    transform-origin: center center;
+    will-change: transform;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+  .lightbox-zoom-hint {
+    text-align: center;
+    font-size: 0.78rem;
+    color: rgba(255, 255, 255, 0.55);
+    padding: 0.6rem;
+    background: rgba(0, 0, 0, 0.4);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .lightbox-cards-grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem;
+  }
+  .lightbox-glass-card {
+    background: rgba(18, 22, 28, 0.75);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 16px;
+    padding: 1.25rem 1.5rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+  }
+  .lightbox-glass-card:hover {
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+  }
+  .lightbox-desc-card {
+    grid-column: 1 / -1;
+  }
+  .lightbox-card-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #0099ff;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .lightbox-card-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0;
+  }
+  .lightbox-card-subtitle {
+    font-size: 0.95rem;
+    color: #cbd5e1;
+    margin: 0;
+  }
+  .lightbox-card-desc {
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: #94a3b8;
+    margin: 0;
+  }
+
+
+  .mono-quick-links { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.55rem; }
+  .mono-quick-links li a {
+    color: #94a3b8;
+    font-size: 0.88rem;
+    text-decoration: none;
+    transition: color 0.25s ease, transform 0.25s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .mono-quick-links li a i { font-size: 0.72rem; color: #0099ff; }
+  .mono-quick-links li a:hover { color: #ffffff; transform: translateX(4px); }
+
+</style>
+<style>
+  /* ========================================================
+     OUR MEMORIES - IMAGE INSPECTION SCREEN (IMAGE TOP, TEXT BELOW)
+     ======================================================== */
+  #imageLightbox {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(2, 6, 12, 0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+    padding: 1.5rem;
+    overflow-y: auto;
+  }
+  #imageLightbox.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .lightbox-close-btn {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: #ffffff;
+    font-size: 1.25rem;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    z-index: 1000001;
+    transition: transform 0.2s ease, background 0.2s ease;
+  }
+  .lightbox-close-btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: scale(1.08);
+  }
+  .memory-inspector-card {
+    position: relative;
+    width: 100%;
+    max-width: 780px;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    border-radius: 24px;
+    background: rgba(13, 17, 23, 0.88);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    overflow: hidden;
+    transform: scale(0.94) translateY(20px);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  #imageLightbox.active .memory-inspector-card {
+    transform: scale(1) translateY(0);
+  }
+  .memory-inspector-media {
+    width: 100%;
+    max-height: 52vh;
+    background: #000;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .memory-inspector-media img {
+    width: 100%;
+    height: 100%;
+    max-height: 52vh;
+    object-fit: cover;
+    display: block;
+  }
+  .memory-inspector-body {
+    padding: 1.75rem 2rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    background: linear-gradient(180deg, rgba(13, 17, 23, 0.7) 0%, rgba(7, 10, 15, 0.95) 100%);
+  }
+  .memory-inspector-badge {
+    align-self: flex-start;
+    padding: 0.3rem 0.85rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #60a5fa;
+    background: rgba(59, 130, 246, 0.15);
+    border: 1px solid rgba(96, 165, 250, 0.3);
+    border-radius: 999px;
+  }
+  .memory-inspector-title {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.25;
+    margin-top: 0.25rem;
+  }
+  .memory-inspector-subtitle {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #93c5fd;
+    line-height: 1.4;
+  }
+  .memory-inspector-desc {
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: #9ca3af;
+    line-height: 1.6;
+    margin-top: 0.25rem;
+  }
+  @media (max-width: 640px) {
+    .memory-inspector-card { max-height: 94vh; border-radius: 18px; }
+    .memory-inspector-media { max-height: 40vh; }
+    .memory-inspector-body { padding: 1.25rem; }
+    .memory-inspector-title { font-size: 1.3rem; }
+    .memory-inspector-subtitle { font-size: 0.95rem; }
+    .memory-inspector-desc { font-size: 0.85rem; }
+  }
+</style>
+
+<style id="requested-updates">
+  /* Guest Reviews: clipped continuous lane with black edge fades. */
+  .mono-reviews-content { position: relative; min-width: 0; }
+  .mono-review-viewport { position: relative; margin-top: 1.25rem; overflow: hidden; }
+  .mono-review-viewport::before, .mono-review-viewport::after {
+    content: ""; position: absolute; z-index: 4; top: 0; bottom: 1rem; width: clamp(28px, 7vw, 82px); pointer-events: none;
+  }
+  .mono-review-viewport::before { left: 0; background: linear-gradient(90deg, #050505 0%, rgba(5,5,5,.86) 30%, rgba(5,5,5,0) 100%); }
+  .mono-review-viewport::after { right: 0; background: linear-gradient(270deg, #050505 0%, rgba(5,5,5,.86) 30%, rgba(5,5,5,0) 100%); }
+  .mono-review-track { margin-top: 0; padding-inline: clamp(28px, 7vw, 82px); scroll-snap-type: none; }
+  .mono-review-track.review-paused { cursor: pointer; }
+
+  /* Quick Links: reference-file text-only presentation. */
+  .mono-quick-links { list-style: none; display: grid; gap: .55rem; padding: 0; margin: 0; }
+  .mono-quick-links li a { color: #aaa; font-size: .72rem; line-height: 1.75; text-decoration: none; display: inline; transition: color .2s ease; }
+  .mono-quick-links li a:hover { color: #fff; transform: none; }
+
+  /* Memory inspection: outer card, 16:9 banner, then one nested information card. */
+  #imageLightbox { align-items: flex-start; padding: clamp(4.5rem, 9vh, 6.5rem) 1rem 2rem; overflow-y: auto; }
+  .memory-inspector-card { width: min(920px, 100%); max-width: 920px; max-height: none; flex: 0 0 auto; padding: clamp(.7rem, 1.6vw, 1rem); gap: 1rem; overflow: visible; }
+  .memory-inspector-media { width: 100%; max-height: none; aspect-ratio: 16 / 9; border-radius: 14px; cursor: zoom-in; position: relative; }
+  .memory-inspector-media::after { content: "\f00e"; font-family: "Font Awesome 6 Free"; font-weight: 900; position: absolute; right: 14px; bottom: 14px; width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; color: #fff; background: rgba(0,0,0,.66); border: 1px solid rgba(255,255,255,.34); pointer-events: none; }
+  .memory-inspector-media img { width: 100%; height: 100%; max-height: none; object-fit: cover; border-radius: inherit; }
+  .memory-inspector-body { padding: clamp(1rem, 2.4vw, 1.5rem); gap: .4rem; border: 1px solid rgba(255,255,255,.13); border-radius: 14px; background: rgba(7,10,15,.94); }
+  .memory-inspector-badge { color: #d4d4d8; background: rgba(255,255,255,.07); border-color: rgba(255,255,255,.18); font-size: .6rem; }
+  .memory-inspector-title { font-size: 1.28rem; margin-top: .15rem; }
+  .memory-inspector-subtitle { font-size: .84rem; color: #d4d4d8; }
+  .memory-inspector-desc { font-size: .76rem; color: #a1a1aa; line-height: 1.55; }
+  .lightbox-close-btn { position: fixed !important; top: max(16px, env(safe-area-inset-top)) !important; right: max(16px, env(safe-area-inset-right)) !important; z-index: 1000003 !important; }
+
+  /* Separate full-screen zoom layer, matching the original viewer behavior. */
+  #zoomLightbox { position: fixed; inset: 0; z-index: 1000002; display: flex; align-items: center; justify-content: center; background: rgba(2,6,12,.94); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .35s ease, visibility .35s ease; overflow: hidden; }
+  #zoomLightbox.active { opacity: 1; visibility: visible; pointer-events: auto; }
+  #zoomLightbox .lightbox-content-wrap { width: 100vw; height: 100dvh; display: flex; align-items: center; justify-content: center; overflow: hidden; touch-action: none; cursor: grab; }
+  #zoomLightbox .lightbox-content-wrap.is-dragging { cursor: grabbing; }
+  #lightboxImg { max-width: 92vw; max-height: 88dvh; width: auto; height: auto; object-fit: contain; border-radius: 8px; cursor: grab; transform-origin: center; will-change: transform; user-select: none; touch-action: none; }
+  @media (max-width: 640px) {
+    #imageLightbox { padding: 4.4rem .7rem 1rem; }
+    .memory-inspector-card { border-radius: 16px; }
+    .memory-inspector-media { max-height: none; }
+    .memory-inspector-body { padding: 1rem; }
+    .memory-inspector-title { font-size: 1.04rem; }
+    .memory-inspector-subtitle { font-size: .76rem; }
+    .memory-inspector-desc { font-size: .68rem; }
+  }
+</style>
+</head>
+<body class="loading-locked" oncontextmenu="return false;">
+
+<!-- Liquid Glass Ring Parallax Canvas (GlassRing.html Integration) -->
+<div id="glassRingParallaxWrap" aria-hidden="true" style="position:fixed;inset:0;pointer-events:none;z-index:45;overflow:hidden;opacity:0;transition:opacity 0.5s ease;">
+  <canvas id="glassRingCanvas" style="width:100%;height:100%;display:block;"></canvas>
+</div>
+
+<!-- SPLASH SCREEN -->
+<div id="splashScreen">
+  <div class="splash-brand">XcurseWay Travels</div>
+  <div class="splash-subtitle">Experience the Life</div>
+  <lottie-player class="splash-loader" src="https://ik.imagekit.io/lssafvcmr/projects/Topo%20Sir/loading.json" background="transparent" speed="1" loop autoplay aria-label="Loading"></lottie-player>
+  <div class="splash-progress-wrap"><div class="splash-progress-bar"><div class="splash-progress-fill" id="splashProgressFill"></div><span class="splash-progress-percent" id="splashProgressPercent">0%</span></div></div>
+</div>
+
+<!-- SECTION 1: HERO SECTION -->
+<section class="hero" id="hero">
+  <div class="layer sun"><img id="sunImg" src="https://i.ibb.co/qYpfnxzG/sun.png" alt="Sun"></div>
+  <div class="cloud-canvas-layer">
+    <canvas id="cloud-canvas"></canvas>
+  </div>
+  <div class="layer island"><img id="islandImg" src="https://i.ibb.co/CZnyTk3/island.webp" alt="Distant Island"></div>
+  <div class="layer trees"><img id="treesImg" src="https://i.ibb.co/qYRzXkzK/coconuttrees.webp" alt="Trees"></div>
+  <div class="layer ocean"><img id="oceanImg" src="https://i.ibb.co/7dWQTDNS/ocean-beach.webp" alt="Ocean Beach"></div>
+  <div class="layer boat">
+    <div class="boat-wrapper" id="boatWrapper">
+      <div class="boat-shadow"></div>
+      <img id="boatImg" src="https://i.ibb.co/svDg6s9k/boat.webp" alt="Boat">
+    </div>
+  </div>
+  <div class="layer eagle"><img id="eagleImg" src="https://i.ibb.co/7xYw7Lqp/eagle.webp" alt="Eagle"></div>
+  <div class="layer top-tree"><img id="topTreeImg" src="https://i.ibb.co/hxJStbXc/tree.png" alt="Tree Canopy" loading="eager" fetchpriority="high"></div>
+
+  <div class="hero-center-content">
+    <h1 class="hero-brand-title">XcurseWay Travels</h1>
+    <div class="hero-brand-subtitle">Andaman &amp; Nicobar Island</div>
+    <div class="hero-buttons-container">
+      <button class="liquid-btn btn-explore" id="exploreBtn">Explore Now</button>
+      <button class="liquid-btn btn-book" id="bookBtn">Book Now</button>
+    </div>
+  </div>
+</section>
+
+<!-- TRANSITION OVERLAY LAYER 1 (UPPER CENTER) -->
+<div class="transition-layer" id="transitionLayer">
+  <div class="uw-center-wrapper" id="uwUpperCenterWrapper">
+    <div class="uw-center-inner">
+      <img id="uwUpperCenter" src="https://ik.imagekit.io/lssafvcmr/projects/Topo%20Sir/Sec2/uppercenter.webp" alt="Transition Overlay">
+      <div class="uw-center-filter-tint" id="uwCenterTint"></div>
+      <div class="uw-center-filter-depth" id="uwCenterDepth"></div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 2: UNDERWATER SECTION -->
+<section class="underwater" id="underwater">
+  <div class="underwater-bg">
+    <img id="uwBgImg" src="https://ik.imagekit.io/lssafvcmr/projects/Topo%20Sir/Sec2/water%20background.jpg" alt="Water Background">
+  </div>
+
+  <div class="uw-content-stack" id="uwContentStack">
+    <div class="uw-packages-header" id="uwPackagesHeader">
+      <span class="uw-packages-badge">Timeless Journeys</span>
+      <h2 class="uw-packages-title">Our Memories</h2>
+      <p class="uw-packages-desc">Glimpse through the unforgettable voyages, marine wonders, and island adventures shared with our explorers.</p>
+    </div>
+
+    <div class="uw-carousel-container" id="uwCarouselWrapper">
+      <div id="underwaterDepthCarousel"></div>
+    </div>
+  </div>
+
+  <div class="layer uw-fish">
+    <img id="uwFish" src="https://ik.imagekit.io/lssafvcmr/projects/Topo%20Sir/Sec2/fish.webp" alt="Fish">
+  </div>
+  <div class="layer uw-person">
+    <img id="uwPerson" src="https://ik.imagekit.io/lssafvcmr/projects/Topo%20Sir/Sec2/person.webp" alt="Person Diver">
+  </div>
+  <div class="layer uw-bottom-left">
+    <img id="uwBottomLeft" src="https://ik.imagekit.io/lssafvcmr/projects/Topo%20Sir/Sec2/bottom%20left.webp" alt="Bottom Left">
+  </div>
+  <div class="layer uw-bottom-right">
+    <img id="uwBottomRight" src="https://ik.imagekit.io/lssafvcmr/projects/Topo%20Sir/Sec2/bottom%20right.webp" alt="Bottom Right">
+  </div>
+  <div class="layer uw-top-left">
+    <img id="uwTopLeft" src="https://ik.imagekit.io/lssafvcmr/projects/Topo%20Sir/Sec2/top%20left.webp" alt="Top Left">
+  </div>
+  <div class="layer uw-top-right">
+    <img id="uwTopRight" src="https://ik.imagekit.io/lssafvcmr/projects/Topo%20Sir/Sec2/top%20right.webp" alt="Top Right">
+  </div>
+
+  <div class="underwater-filter-overlay" id="uwFilterOverlay"></div>
+  <div class="underwater-depth-overlay" id="uwDepthOverlay"></div>
+</section>
+
+<!-- TRANSITION OVERLAY LAYER 2 (TREE STEM DIVIDER) -->
+<div class="transition-layer-sec3" id="transitionLayerSec3">
+  <div class="treestem-wrapper" id="treestemWrapper">
+    <div class="treestem-inner">
+      <img id="treestemImg" src="https://i.ibb.co/HTGXy08K/treestem.webp" alt="Tree Stem Divider">
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 3: COASTAL BEACH & EXPEDITION PACKAGES SECTION -->
+<section class="section3" id="section3">
+  <!-- Layer 1: Background (New Image URL) -->
+  <div class="sec3-bg">
+    <img id="sec3BgImg" src="https://i.ibb.co/VY2GZGSJ/section3bg.webp" alt="Section 3 Background">
+  </div>
+
+  <!-- Layer 2: Ocean -->
+  <div class="sec3-ocean" id="sec3OceanWrapper">
+    <img id="sec3OceanImg" src="https://i.ibb.co/p6FBj5X3/oceanodsection2.webp" alt="Section 3 Ocean">
+  </div>
+
+  <!-- Layer 3: Girl on Ocean's beach -->
+  <div class="sec3-girl" id="sec3GirlWrapper">
+    <img id="sec3GirlImg" src="https://i.ibb.co/3ww3kQs/girl.webp" alt="Girl on Beach">
+  </div>
+
+  <!-- Layer 5: Our Packages Horizontal Card Showcase -->
+  <div class="sec3-content-wrap">
+    <div class="sec3-packages-header">
+      <span class="sec3-packages-badge">Bespoke Expeditions</span>
+      <h2 class="sec3-packages-title">Our Packages</h2>
+      <p class="sec3-packages-desc">Handcrafted Andaman voyages customized with premier stays, private catamaran transfers, and authentic marine adventures.</p>
+    </div>
+
+    <!-- Infinite Horizontal Scrollport -->
+    <div class="scroll-x" id="packagesScroller">
+      <ul class="items" id="packagesList">
+
+        <!-- Card 1: Honeymoon Symphony -->
+        <li>
+          <div class="parallax-layer">
+            <div class="card-header">
+              <div class="header-top">
+                <span class="plan-name">Honeymoon Symphony</span>
+                <span class="badge">Bestseller</span>
+              </div>
+              <div class="price-row">
+                <span class="price">₹28,500</span>
+                <span class="billing-cycle">all-inclusive</span>
+              </div>
+              <p class="plan-desc">Radhanagar sunset, cruise tickets, flower bed decor, and private candlelit beach dinner.</p>
+            </div>
+
+            <div class="spec-box">
+              <div class="spec-row">
+                <span class="spec-label">Duration</span>
+                <span class="spec-value">5N / 6D</span>
+              </div>
+              <div class="spec-row">
+                <span class="spec-label">Destinations</span>
+                <span class="spec-value">Port Blair &amp; Havelock</span>
+              </div>
+              <div class="spec-row">
+                <span class="spec-label">Stay Type</span>
+                <span class="spec-value">Beachfront Resort</span>
+              </div>
+              <div class="spec-row">
+                <span class="spec-label">Transfers</span>
+                <span class="spec-value">Private Cab &amp; Cruise</span>
+              </div>
+            </div>
+
+            <div class="features-box">
+              <div class="feature-item">
+                <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Candlelit beach dinner &amp; decor</span>
+              </div>
+              <div class="feature-item">
+                <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Catamaran cruise tickets included</span>
+              </div>
+            </div>
+
+            <button class="cta-btn" onclick="bookDirectWhatsApp('Honeymoon Symphony (5N/6D)')">
+              <i class="fa-brands fa-whatsapp"></i>
+              <span>Choose Package</span>
+            </button>
+          </div>
+        </li>
+
+        <!-- Card 2: Coral Scuba Odyssey -->
+        <li>
+          <div class="parallax-layer">
+            <div class="card-header">
+              <div class="header-top">
+                <span class="plan-name">Coral Scuba Odyssey</span>
+                <span class="badge">Adventure</span>
+              </div>
+              <div class="price-row">
+                <span class="price">₹24,000</span>
+                <span class="billing-cycle">per person</span>
+              </div>
+              <p class="plan-desc">PADI boat dive with underwater GoPro 4K video plus night kayaking in glowing mangroves.</p>
+            </div>
+
+            <div class="spec-box">
+              <div class="spec-row">
+                <span class="spec-label">Duration</span>
+                <span class="spec-value">4N / 5D</span>
+              </div>
+              <div class="spec-row">
+                <span class="spec-label">Activities</span>
+                <span class="spec-value">PADI Boat Dive &amp; Kayak</span>
+              </div>
+              <div class="spec-row">
+                <span class="spec-label">Footage</span>
+                <span class="spec-value">GoPro 4K Underwater</span>
+              </div>
+              <div class="spec-row">
+                <span class="spec-label">Instructor</span>
+                <span class="spec-value">Certified Divemaster</span>
+              </div>
+            </div>
+
+            <div class="features-box">
+              <div class="feature-item">
+                <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Night kayaking in bioluminescent waters</span>
+              </div>
+              <div class="feature-item">
+                <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Full scuba diving equipment suite</span>
+              </div>
+            </div>
+
+            <button class="cta-btn" onclick="bookDirectWhatsApp('Coral Scuba Odyssey (4N/5D)')">
+              <i class="fa-brands fa-whatsapp"></i>
+              <span>Choose Package</span>
+            </button>
+          </div>
+        </li>
+
+        <!-- Card 3: Family Island Circuit -->
+        <li>
+          <div class="parallax-layer">
+            <div class="card-header">
+              <div class="header-top">
+                <span class="plan-name">Family Island Circuit</span>
+                <span class="badge">Complete</span>
+              </div>
+              <div class="price-row">
+                <span class="price">₹34,500</span>
+                <span class="billing-cycle">per family</span>
+              </div>
+              <p class="plan-desc">Cellular Jail Light &amp; Sound, Ross Island deer sanctuary, North Bay coral glass-bottom boat.</p>
+            </div>
+
+            <div class="spec-box">
+              <div class="spec-row">
+                <span class="spec-label">Duration</span>
+                <span class="spec-value">6N / 7D</span>
+              </div>
+              <div class="spec-row">
+                <span class="spec-label">Destinations</span>
+                <span class="spec-value">Port Blair, Ross &amp; North Bay</span>
+              </div>
+              <div class="spec-row">
+                <span class="spec-label">Sightseeing</span>
+                <span class="spec-value">Island Circuit Passes</span>
+              </div>
+              <div class="spec-row">
+                <span class="spec-label">Guide</span>
+                <span class="spec-value">Dedicated Island Escort</span>
+              </div>
+            </div>
+
+            <div class="features-box">
+              <div class="feature-item">
+                <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Coral glass-bottom boat ride</span>
+              </div>
+              <div class="feature-item">
+                <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Light &amp; Sound premier show tickets</span>
+              </div>
+            </div>
+
+            <button class="cta-btn" onclick="bookDirectWhatsApp('Family Island Circuit (6N/7D)')">
+              <i class="fa-brands fa-whatsapp"></i>
+              <span>Choose Package</span>
+            </button>
+          </div>
+        </li>
+
+        <!-- Card 4: Baratang & Caves -->
+        <li>
+          <div class="parallax-layer">
+            <div class="card-header">
+              <div class="header-top">
+                <span class="plan-name">Baratang &amp; Caves</span>
+                <span class="badge">Explorer</span>
+              </div>
+              <div class="price-row">
+                <span class="price">₹18,500</span>
+                <span class="billing-cycle">per traveler</span>
+              </div>
+              <p class="plan-desc">Million-year-old limestone caves via dense mangrove speedboats and the mud volcano.</p>
+            </div>
+
+            <div class="spec-box">
+              <div class="spec-row">
+                <span class="spec-label">Duration</span>
+                <span class="spec-value">3N / 4D</span>
+              </div>
+              <div class="spec-row">
+                <span class="spec-label">Expedition</span>
+                <span class="spec-value">Speedboat Mangrove Safari</span>
+              </div>
+              <div class="spec-row">
+                <span class="spec-label">Permits</span>
+                <span class="spec-value">Tribal Reserve Passes</span>
+              </div>
+              <div class="spec-row">
+                <span class="spec-label">Attraction</span>
+                <span class="spec-value">Limestone Caves &amp; Volcano</span>
+              </div>
+            </div>
+
+            <div class="features-box">
+              <div class="feature-item">
+                <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Dense mangrove speedboat safari</span>
+              </div>
+              <div class="feature-item">
+                <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>All Forest Department permits included</span>
+              </div>
+            </div>
+
+            <button class="cta-btn" onclick="bookDirectWhatsApp('Baratang &amp; Caves (3N/4D)')">
+              <i class="fa-brands fa-whatsapp"></i>
+              <span>Choose Package</span>
+            </button>
+          </div>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- OUR MEMORIES INSPECTION SCREEN -->
+<div id="imageLightbox" role="dialog" aria-modal="true" aria-label="Memory details">
+  <button class="lightbox-close-btn" id="lightboxClose" aria-label="Close memory details" type="button"><i class="fa-solid fa-xmark"></i></button>
+  <article class="memory-inspector-card">
+    <div class="memory-inspector-media" id="memoryBanner" role="button" tabindex="0" aria-label="Open image zoom viewer">
+      <img id="lightboxBannerImg" src="" alt="Selected memory">
+    </div>
+    <div class="memory-inspector-body">
+      <span id="lightboxBadge" class="memory-inspector-badge">Island Voyage</span>
+      <h3 id="lightboxTitle" class="memory-inspector-title">Timeless Andaman Moments</h3>
+      <p id="lightboxSubtitle" class="memory-inspector-subtitle">Pristine Lagoons &amp; White Sands</p>
+      <p id="lightboxDesc" class="memory-inspector-desc">Explore pure turquoise waters, vivid sea life, and tranquil island scenery crafted exclusively by XcurseWay Travels.</p>
+    </div>
+  </article>
+</div>
+
+<div id="zoomLightbox" role="dialog" aria-modal="true" aria-label="Fullscreen image zoom">
+  <button class="lightbox-close-btn" id="zoomLightboxClose" aria-label="Close image zoom" type="button"><i class="fa-solid fa-xmark"></i></button>
+  <div class="lightbox-content-wrap" id="lightboxContentWrap">
+    <img id="lightboxImg" src="" alt="Fullscreen memory">
+  </div>
+</div>
+
+<div class="mono-content">
+  <section id="why-choose-us" class="mono-section">
+    <div class="mono-grid"><div class="mono-art illustration-art"><img src="https://i.ibb.co/9QHys0G/whychooseus.jpg" alt="Why Choose Us Graphic" loading="lazy"></div><div><h2 class="mono-heading">Why choose us <span aria-hidden="true">🙄</span></h2><div class="mono-features">
+      <div class="mono-feature"><div class="mono-icon"><i class="fa-solid fa-location-dot"></i></div><div><h3>Unique destination</h3><p class="mono-copy">Exclusive Andaman spots, private beach access, and custom luxury itineraries crafted just for you.</p></div></div>
+      <div class="mono-feature"><div class="mono-icon"><i class="fa-solid fa-wallet"></i></div><div><h3>Worth of money</h3><p class="mono-copy">Direct island contracts guarantee zero middleman surcharges and 100% price transparency.</p></div></div>
+      <div class="mono-feature"><div class="mono-icon"><i class="fa-solid fa-campground"></i></div><div><h3>Wonderful places</h3><p class="mono-copy">Crystal lagoons, bio-luminescent kayaking, colonial ruins, and breathtaking marine life.</p></div></div>
+    </div></div></div>
+  </section>
+  <section id="plan-easy" class="mono-section mono-soft"><div class="mono-grid"><div class="mono-art illustration-art"><img src="https://i.ibb.co/zWdMCQth/planeasypayless.jpg" alt="Plan Easy Pay Less" loading="lazy"></div><div><h2 class="mono-heading">Plan easy, Pay less &amp;<br>experience more</h2><div class="mono-plan-copy"><div class="circular-loop-wrap" aria-hidden="true"><div class="circular-loop-text" id="planCircularText"></div></div><div><p class="mono-kicker">The latest travel news • Guides • Vacation tips</p><p class="mono-copy">Traveling opens you to a fresh perspective on life. You will immerse in untouched island cultures, create lasting memories, and enjoy transparent pricing without surprises.</p></div></div></div></div></section>
+  <section id="reviews" class="mono-section"><div class="mono-reviews-layout"><div class="mono-art illustration-art"><img src="https://i.ibb.co/xtKZL7Wt/reviews.jpg" alt="Guest Reviews" loading="lazy"></div><div class="mono-reviews-content"><h2 class="mono-heading">Guest Reviews</h2><p class="mono-copy">Real feedback from travelers coordinated through our Pamgarh and Port Blair desks.</p><div class="mono-review-viewport"><div class="mono-review-track">
+    <article class="mono-review"><img class="mono-review-avatar" src="https://randomuser.me/api/portraits/women/44.jpg" alt="Priya Kashyap" loading="lazy"><div class="mono-stars">★★★★★</div><blockquote>“Avinash arranged our entire Havelock honeymoon from Chhattisgarh. Seamless transfers, flowers in the car, and private sunset dinner!”</blockquote><strong>— Priya &amp; Alok Kashyap</strong><span>Pamgarh (495554) • Honeymoon</span></article>
+    <article class="mono-review"><img class="mono-review-avatar" src="https://randomuser.me/api/portraits/men/32.jpg" alt="Rahul Singhania" loading="lazy"><div class="mono-stars">★★★★★</div><blockquote>“Makruzz cruise seats were confirmed within minutes. PADI diving video at Nemo Reef was breathtaking and crystal clear.”</blockquote><strong>— Rahul Singhania</strong><span>Raipur • Scuba Adventure</span></article>
+    <article class="mono-review"><img class="mono-review-avatar" src="https://randomuser.me/api/portraits/men/75.jpg" alt="Dr. S. Nambiar" loading="lazy"><div class="mono-stars">★★★★★</div><blockquote>“Traveling with 74-year-old parents was easy. The private Innova was clean, on time, and jetty wheelchair assistance was ready.”</blockquote><strong>— Dr. S. Nambiar</strong><span>Bengaluru • Senior Family Tour</span></article>
+    <article class="mono-review"><img class="mono-review-avatar" src="https://randomuser.me/api/portraits/women/65.jpg" alt="Ananya" loading="lazy"><div class="mono-stars">★★★★★</div><blockquote>“Bioluminescent kayaking in Havelock mangroves at midnight was the highlight of our trip. Outstanding safety standards.”</blockquote><strong>— Ananya &amp; Friends</strong><span>Mumbai • Adventure Group</span></article>
+    <article class="mono-review"><img class="mono-review-avatar" src="https://randomuser.me/api/portraits/men/52.jpg" alt="Capt. D. Roy" loading="lazy"><div class="mono-stars">★★★★★</div><blockquote>“Transparent quotes with only 20% advance token. No hidden charges. Avinash answered our calls instantly whenever needed.”</blockquote><strong>— Capt. D. Roy (Retd.)</strong><span>Kolkata • Island Circuit</span></article>
+  </div></div></div></div></section>
+  <section id="faq" class="mono-section mono-soft"><div class="mono-faq-layout"><div class="mono-art illustration-art"><img src="https://i.ibb.co/39v6zy7P/faqs.jpg" alt="XcurseWay travel planning illustration" loading="lazy"></div><div class="mono-faq-content"><div class="mono-faq-head"><h2 class="mono-heading">Frequently Asked</h2><p class="mono-copy">Super short, simple answers to your island travel questions.</p></div>
+<div class="faq-item-scaled"><div class="faq-q-scaled" onclick="toggleFaq(this)">1. Passport needed for Indians?<i class="fa-solid fa-chevron-down"></i></div><div class="faq-a-scaled">No. Only Aadhar card, Voter ID, or Driving License is needed.</div></div><div class="faq-item-scaled"><div class="faq-q-scaled" onclick="toggleFaq(this)">2. Best time to visit?<i class="fa-solid fa-chevron-down"></i></div><div class="faq-a-scaled">October to May offers calm blue seas and best underwater visibility.</div></div><div class="faq-item-scaled"><div class="faq-q-scaled" onclick="toggleFaq(this)">3. Swimming required for scuba?<i class="fa-solid fa-chevron-down"></i></div><div class="faq-a-scaled">No. Certified PADI dive masters hold and guide you constantly.</div></div><div class="faq-item-scaled"><div class="faq-q-scaled" onclick="toggleFaq(this)">4. How long does ferry take?<i class="fa-solid fa-chevron-down"></i></div><div class="faq-a-scaled">Port Blair to Havelock takes roughly 90 minutes via high-speed catamaran.</div></div><div class="faq-item-scaled"><div class="faq-q-scaled" onclick="toggleFaq(this)">5. Can I visit your Pamgarh office?<i class="fa-solid fa-chevron-down"></i></div><div class="faq-a-scaled">Yes, our registered office is on Main Road, Pamgarh (Pincode: 495554).</div></div><div id="extra-faqs-wrapper" class="faqs-expand-wrapper"><div class="faqs-expand-inner"><div class="faq-item-scaled"><div class="faq-q-scaled" onclick="toggleFaq(this)">6. What if sea weather is bad?<i class="fa-solid fa-chevron-down"></i></div><div class="faq-a-scaled">Our on-ground staff re-books next ferry or adjusts hotels at zero cost.</div></div><div class="faq-item-scaled"><div class="faq-q-scaled" onclick="toggleFaq(this)">7. Are cabs private or shared?<i class="fa-solid fa-chevron-down"></i></div><div class="faq-a-scaled">All our cabs are 100% private, sanitized, and air-conditioned.</div></div><div class="faq-item-scaled"><div class="faq-q-scaled" onclick="toggleFaq(this)">8. Advance booking token needed?<i class="fa-solid fa-chevron-down"></i></div><div class="faq-a-scaled">Only 20% advance token locks your complete itinerary and ferry passes.</div></div><div class="faq-item-scaled"><div class="faq-q-scaled" onclick="toggleFaq(this)">9. Are vegetarian meals available?<i class="fa-solid fa-chevron-down"></i></div><div class="faq-a-scaled">Yes, pure veg, Jain, and North/South Indian restaurants are abundant.</div></div><div class="faq-item-scaled"><div class="faq-q-scaled" onclick="toggleFaq(this)">10. Cellular Jail open on Mondays?<i class="fa-solid fa-chevron-down"></i></div><div class="faq-a-scaled">Cellular Jail is closed on Mondays and national holidays.</div></div></div></div><button id="toggle-faq-btn" onclick="toggleMoreFaqs()" class="more-faqs-btn-card"><i id="faq-btn-icon" class="fa-solid fa-circle-plus"></i><span id="faq-btn-text">View More FAQs</span></button></div></div></section></div>
+<footer id="contact" class="mono-footer"><div class="mono-footer-grid"><div><div class="mono-brand"><img src="https://i.ibb.co/13xBXFz/6635.png" alt="XcurseWay Logo"><span>XcurseWay Travels</span></div><p>Operating across the Andaman &amp; Nicobar archipelago with registered presence in Chhattisgarh. With unmatched expertise in catamaran coordination, PADI scuba expeditions, and private island itineraries, XcurseWay delivers seamless tropical holidays.</p><div class="mono-socials"><a href="https://www.facebook.com/" target="_blank" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a><a href="https://www.instagram.com/" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a><a href="https://www.linkedin.com/" target="_blank" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a><a href="https://x.com/" target="_blank" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a></div></div>    <div>
+      <h4>Quick Links</h4>
+      <ul class="mono-quick-links">
+        <li><a href="#hero" class="smooth-quick-link">Home</a></li>
+        <li><a href="#underwater" class="smooth-quick-link">Our Memories</a></li>
+        <li><a href="#section3" class="smooth-quick-link">Curated Packages</a></li>
+        <li><a href="#why-choose-us" class="smooth-quick-link">Why Choose Us</a></li>
+        <li><a href="#plan-easy" class="smooth-quick-link">Plan Easy, Pay Less</a></li>
+        <li><a href="#reviews" class="smooth-quick-link">Guest Reviews</a></li>
+        <li><a href="#faq" class="smooth-quick-link">Travel FAQs</a></li>
+        <li><a href="#contact" class="smooth-quick-link">Contact Us</a></li>
+      </ul>
+    </div><div><h4>Contact Us</h4><ul class="mono-contact"><li><i class="fa-solid fa-location-dot"></i><span><strong>Registered Office:</strong><br>Main Road, Pamgarh,<br>Dist. Janjgir Champa, Chhattisgarh — <strong>495554</strong></span></li><li><i class="fa-solid fa-ship"></i><span><strong>Island Base:</strong><br>Phoenix Bay Jetty Road,<br>Port Blair (Sri Vijaya Puram) — 744101</span></li><li><i class="fa-solid fa-phone"></i><span><strong>Organizer Direct:</strong><br>+91 93846 08990 (Avinash Topo)</span></li></ul></div></div><div class="mono-copyright">Copyright &copy; 2026 XcurseWay Travels | Curated &amp; Conducted by Avinash Topo | Pamgarh (495554) &amp; Port Blair</div></footer>
+
+
+<script>
+(() => {
+  // Prevent right-click / image downloads
+  document.addEventListener('contextmenu', e => e.preventDefault());
+
+  // Elements - Hero Section
+  const hero = document.getElementById('hero');
+  const boatWrapper = document.getElementById('boatWrapper');
+  const eagle = document.getElementById('eagleImg');
+  const oceanImg = document.getElementById('oceanImg');
+  const treesImg = document.getElementById('treesImg');
+  const islandImg = document.getElementById('islandImg');
+  const topTreeImg = document.getElementById('topTreeImg');
+  const sunImg = document.getElementById('sunImg');
+  const canvas = document.getElementById('cloud-canvas');
+
+  // Elements - Transition Overlay & Underwater Section
+  const underwater = document.getElementById('underwater');
+  const uwPackagesHeader = document.getElementById('uwPackagesHeader');
+  const uwUpperCenterWrapper = document.getElementById('uwUpperCenterWrapper');
+  const uwCenterTint = document.getElementById('uwCenterTint');
+  const uwCenterDepth = document.getElementById('uwCenterDepth');
+  const uwFish = document.getElementById('uwFish');
+  const uwPerson = document.getElementById('uwPerson');
+  const uwBottomLeft = document.getElementById('uwBottomLeft');
+  const uwBottomRight = document.getElementById('uwBottomRight');
+  const uwTopLeft = document.getElementById('uwTopLeft');
+  const uwTopRight = document.getElementById('uwTopRight');
+  const uwFilterOverlay = document.getElementById('uwFilterOverlay');
+  const uwDepthOverlay = document.getElementById('uwDepthOverlay');
+
+  // Elements - Section 3 & Tree Stem
+  const section3 = document.getElementById('section3');
+  const treestemWrapper = document.getElementById('treestemWrapper');
+  const sec3OceanWrapper = document.getElementById('sec3OceanWrapper');
+  const sec3GirlWrapper = document.getElementById('sec3GirlWrapper');
+  // Keep illustrations completely static; only the text columns retain gentle parallax.
+  const belowSec3Parallax = Array.from(document.querySelectorAll('.mono-section .mono-grid > div:last-child, .mono-reviews-content, .mono-faq-content'));
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  belowSec3Parallax.forEach((element, index) => {
+    element.classList.add('below-sec3-parallax');
+    element.dataset.parallaxDirection = index % 2 === 0 ? '1' : '-1';
+  });
+
+  // Interactive Buttons & Splash Screen
+  const exploreBtn = document.getElementById('exploreBtn');
+  const bookBtn = document.getElementById('bookBtn');
+  const splashScreen = document.getElementById('splashScreen');
+
+  // Two-stage memory viewer: 16:9 details first, dedicated zoom screen second.
+  const lightbox = document.getElementById('imageLightbox');
+  const lightboxBannerImg = document.getElementById('lightboxBannerImg');
+  const lightboxClose = document.getElementById('lightboxClose');
+  const memoryBanner = document.getElementById('memoryBanner');
+  const zoomLightbox = document.getElementById('zoomLightbox');
+  const zoomLightboxClose = document.getElementById('zoomLightboxClose');
+  const lightboxImg = document.getElementById('lightboxImg');
+  const lightboxContentWrap = document.getElementById('lightboxContentWrap');
+
+  const zoomState = { scale:1,targetScale:1,x:0,y:0,targetX:0,targetY:0,raf:0,pointers:new Map(),pinchDistance:0,pinchScale:1,moved:false,lastTap:0 };
+  const clampZoom = value => Math.min(5, Math.max(1, value));
+  function constrainPan(){ if(zoomState.targetScale<=1.001){zoomState.targetX=0;zoomState.targetY=0;return;} const maxX=Math.max(0,lightboxImg.clientWidth*(zoomState.targetScale-1)/2),maxY=Math.max(0,lightboxImg.clientHeight*(zoomState.targetScale-1)/2);zoomState.targetX=Math.min(maxX,Math.max(-maxX,zoomState.targetX));zoomState.targetY=Math.min(maxY,Math.max(-maxY,zoomState.targetY)); }
+  function renderZoom(){ zoomState.scale+=(zoomState.targetScale-zoomState.scale)*.2;zoomState.x+=(zoomState.targetX-zoomState.x)*.2;zoomState.y+=(zoomState.targetY-zoomState.y)*.2;lightboxImg.style.transform=`translate3d(${zoomState.x}px,${zoomState.y}px,0) scale(${zoomState.scale})`;const moving=Math.abs(zoomState.targetScale-zoomState.scale)>.001||Math.abs(zoomState.targetX-zoomState.x)>.1||Math.abs(zoomState.targetY-zoomState.y)>.1;zoomState.raf=moving?requestAnimationFrame(renderZoom):0; }
+  function requestZoomFrame(){if(!zoomState.raf)zoomState.raf=requestAnimationFrame(renderZoom);}
+  function resetZoom(immediate=false){zoomState.targetScale=1;zoomState.targetX=0;zoomState.targetY=0;zoomState.pointers.clear();if(immediate){zoomState.scale=1;zoomState.x=0;zoomState.y=0;lightboxImg.style.transform='translate3d(0,0,0) scale(1)';}else requestZoomFrame();}
+  function zoomAt(nextScale,clientX,clientY){const rect=lightboxContentWrap.getBoundingClientRect(),px=clientX-(rect.left+rect.width/2),py=clientY-(rect.top+rect.height/2),next=clampZoom(nextScale),ratio=next/zoomState.targetScale;zoomState.targetX=px-(px-zoomState.targetX)*ratio;zoomState.targetY=py-(py-zoomState.targetY)*ratio;zoomState.targetScale=next;constrainPan();requestZoomFrame();}
+  function openFullscreenImage(src,alt,memoryData){if(!src)return;resetZoom(true);lightboxBannerImg.src=src;lightboxBannerImg.alt=alt||(memoryData&&memoryData.title)||'Memory image';lightboxImg.src=src;lightboxImg.alt=lightboxBannerImg.alt;document.getElementById('lightboxBadge').textContent=(memoryData&&memoryData.badge)||'Island Voyage';document.getElementById('lightboxTitle').textContent=(memoryData&&memoryData.title)||alt||'Timeless Andaman Moments';document.getElementById('lightboxSubtitle').textContent=(memoryData&&memoryData.subtitle)||'Pristine Lagoons & White Sands';document.getElementById('lightboxDesc').textContent=(memoryData&&memoryData.description)||'Explore pure turquoise waters, vivid sea life, and tranquil island scenery crafted exclusively by XcurseWay Travels.';lightbox.classList.add('active');document.body.classList.add('gallery-open');lightboxClose.focus();}
+  function openZoomViewer(){if(!lightboxBannerImg.src)return;resetZoom(true);zoomLightbox.classList.add('active');zoomLightboxClose.focus();}
+  function closeZoomViewer(){zoomLightbox.classList.remove('active');resetZoom(true);memoryBanner.focus();}
+  function closeFullscreenImage(){closeZoomViewer();lightbox.classList.remove('active');document.body.classList.remove('gallery-open');setTimeout(()=>{if(!lightbox.classList.contains('active')){lightboxBannerImg.src='';lightboxImg.src='';}},350);}
+  memoryBanner.addEventListener('click',e=>{e.stopPropagation();openZoomViewer();});
+  memoryBanner.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openZoomViewer();}});
+  lightboxContentWrap.addEventListener('wheel',e=>{e.preventDefault();const dy=e.deltaY*(e.deltaMode===1?16:e.deltaMode===2?100:1);zoomAt(zoomState.targetScale*Math.exp(-dy*.0015),e.clientX,e.clientY);},{passive:false});
+  lightboxContentWrap.addEventListener('pointerdown',e=>{zoomState.pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});zoomState.moved=false;lightboxContentWrap.setPointerCapture(e.pointerId);lightboxContentWrap.classList.add('is-dragging');if(zoomState.pointers.size===2){const p=[...zoomState.pointers.values()];zoomState.pinchDistance=Math.hypot(p[1].x-p[0].x,p[1].y-p[0].y);zoomState.pinchScale=zoomState.targetScale;}});
+  lightboxContentWrap.addEventListener('pointermove',e=>{const prev=zoomState.pointers.get(e.pointerId);if(!prev)return;const dx=e.clientX-prev.x,dy=e.clientY-prev.y;if(Math.abs(dx)+Math.abs(dy)>2)zoomState.moved=true;zoomState.pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});if(zoomState.pointers.size===2){const p=[...zoomState.pointers.values()],dist=Math.hypot(p[1].x-p[0].x,p[1].y-p[0].y),cx=(p[0].x+p[1].x)/2,cy=(p[0].y+p[1].y)/2;zoomAt(zoomState.pinchScale*(dist/Math.max(zoomState.pinchDistance,1)),cx,cy);}else if(zoomState.targetScale>1){zoomState.targetX+=dx;zoomState.targetY+=dy;constrainPan();requestZoomFrame();}});
+  const endGalleryPointer=e=>{zoomState.pointers.delete(e.pointerId);lightboxContentWrap.classList.toggle('is-dragging',zoomState.pointers.size>0);};
+  lightboxContentWrap.addEventListener('pointerup',endGalleryPointer);lightboxContentWrap.addEventListener('pointercancel',endGalleryPointer);
+  lightboxImg.addEventListener('dblclick',e=>{e.preventDefault();zoomAt(zoomState.targetScale>1.05?1:2.5,e.clientX,e.clientY);});
+  lightboxImg.addEventListener('click',e=>{e.stopPropagation();if(zoomState.moved)return;const now=performance.now();if(now-zoomState.lastTap<320)zoomAt(zoomState.targetScale>1.05?1:2.5,e.clientX,e.clientY);zoomState.lastTap=now;});
+  lightboxClose.addEventListener('click',e=>{e.stopPropagation();closeFullscreenImage();});zoomLightboxClose.addEventListener('click',e=>{e.stopPropagation();closeZoomViewer();});
+  lightbox.addEventListener('click',e=>{if(e.target===lightbox)closeFullscreenImage();});zoomLightbox.addEventListener('click',e=>{if(e.target===zoomLightbox)closeZoomViewer();});
+  window.addEventListener('keydown',e=>{if(e.key!=='Escape')return;if(zoomLightbox.classList.contains('active'))closeZoomViewer();else if(lightbox.classList.contains('active'))closeFullscreenImage();});
+
+  let targetScroll = 0;
+  let currentScroll = 0;
+  let targetScrollUW = 0;
+  let currentScrollUW = 0;
+
+  function initSplashScreen() {
+    const splashEl = document.getElementById('splashScreen');
+    if (!splashEl) return;
+    const images = Array.from(document.images);
+    images.forEach((img) => {
+      img.loading = 'eager';
+      if (img.id === 'topTreeImg') img.fetchPriority = 'high';
+    });
+    let loadedCount = 0;
+    const totalCount = Math.max(1, images.length);
+    const progressFill = document.getElementById('splashProgressFill');
+    const progressPct = document.getElementById('splashProgressPercent');
+    let isFinished = false;
+    const settledImages = new WeakSet();
+    const retryCounts = new WeakMap();
+    const MAX_RETRIES = 2;
+    const MAX_WAIT_MS = 12000;
+    let safetyTimer;
+
+    const setProgress = (pct) => {
+      const v = Math.max(0, Math.min(100, Math.round(pct)));
+      if (progressFill) progressFill.style.width = v + '%';
+      if (progressPct) {
+        progressPct.textContent = v + '%';
+        progressPct.classList.toggle('reached', v > 55);
+      }
+    };
+
+    const finishLoading = () => {
+      if (isFinished) return;
+      isFinished = true;
+      window.clearTimeout(safetyTimer);
+      setProgress(100);
+      setTimeout(() => {
+        splashEl.classList.add('loaded');
+        setTimeout(() => {
+          splashEl.style.display = 'none';
+          document.body.classList.remove('loading-locked');
+        }, 700);
+      }, 400);
+    };
+
+    const checkFinished = (img) => {
+      if (isFinished || settledImages.has(img)) return;
+      settledImages.add(img);
+      loadedCount++;
+      const pct = (loadedCount / totalCount) * 100;
+      setProgress(pct);
+      if (loadedCount >= totalCount) finishLoading();
+    };
+
+    setProgress(0);
+
+    images.forEach((img) => {
+      if (img.complete && img.naturalWidth > 0) {
+        checkFinished(img);
+        return;
+      }
+
+      img.addEventListener('load', () => checkFinished(img), { once: true });
+      img.addEventListener('error', () => {
+        const retries = retryCounts.get(img) || 0;
+        if (img.id === 'topTreeImg' && retries < MAX_RETRIES) {
+          retryCounts.set(img, retries + 1);
+          const originalSrc = img.currentSrc || img.src;
+          window.setTimeout(() => {
+            if (isFinished || settledImages.has(img)) return;
+            const cleanSrc = originalSrc.replace(/([?&])assetRetry=\d+(&?)/, (_match, lead, tail) => tail ? lead : '');
+            const separator = cleanSrc.includes('?') ? '&' : '?';
+            img.src = cleanSrc + separator + 'assetRetry=' + Date.now();
+          }, 500);
+          return;
+        }
+        checkFinished(img);
+      });
+
+      // A cached failed image can already be complete before listeners attach.
+      if (img.complete) checkFinished(img);
+    });
+
+    // Never trap visitors behind the splash when a remote host is unavailable.
+    safetyTimer = window.setTimeout(finishLoading, MAX_WAIT_MS);
+
+    if (images.length === 0) finishLoading();
+  }
+
+  
+  // Smooth transition for all Quick Links and anchor navigation
+  document.addEventListener('click', (e) => {
+    const link = e.target.closest('.smooth-quick-link, a[href^="#"]');
+    if (!link) return;
+    const href = link.getAttribute('href');
+    if (!href || href === '#' || href.startsWith('admin')) return;
+    const target = document.querySelector(href);
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+
+  // Explore auto-scroll: half speed, cancelled by the next screen interaction.
+  let isAutoScrolling = false;
+  let autoScrollRun = 0;
+  function stopPageAutoScroll() {
+    if (!isAutoScrolling) return;
+    isAutoScrolling = false;
+    autoScrollRun++;
+  }
+  function slowScrollToBottom() {
+    if (isAutoScrolling) return;
+    isAutoScrolling = true;
+    const run = ++autoScrollRun;
+    const startPos = window.pageYOffset || document.documentElement.scrollTop;
+    const endPos = document.documentElement.scrollHeight - window.innerHeight;
+    const distance = endPos - startPos;
+    const duration = 9600;
+    let startTime = null;
+
+    function step(timestamp) {
+      if (!isAutoScrolling || run !== autoScrollRun) return;
+      if (!startTime) startTime = timestamp;
+      const progress = timestamp - startTime;
+      const percent = Math.min(progress / duration, 1.0);
+      const ease = percent < 0.5 ? 4 * percent * percent * percent : 1 - Math.pow(-2 * percent + 2, 3) / 2;
+      window.scrollTo(0, startPos + distance * ease);
+      if (progress < duration) requestAnimationFrame(step);
+      else isAutoScrolling = false;
+    }
+    requestAnimationFrame(step);
+  }
+
+  exploreBtn.addEventListener('click', slowScrollToBottom);
+  window.addEventListener('wheel', stopPageAutoScroll, {passive:true});
+  window.addEventListener('pointerdown', stopPageAutoScroll, {passive:true});
+  window.addEventListener('keydown', stopPageAutoScroll);
+
+  bookBtn.addEventListener('click', () => {
+    const phoneNumber = "919384608990";
+    const message = encodeURIComponent("Hello XcurseWay Travels, I would like to inquire about booking an expedition!");
+    window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
+  });
+
+  function updateBoatWaterline() {
+    if (!oceanImg || !boatWrapper) return;
+    const oceanHeight = oceanImg.offsetHeight;
+    const waterLineY = oceanHeight * 0.44;
+    boatWrapper.style.bottom = `${waterLineY}px`;
+  }
+
+  function updateScrollTarget() {
+    const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+    if (lightbox && lightbox.classList.contains('active')) { requestAnimationFrame(animate); return; }
+    const heroH = hero.offsetHeight || window.innerHeight;
+    targetScroll = Math.min(2.0, Math.max(0, scrollY / heroH));
+
+    const uwTop = underwater.offsetTop;
+    const uwH = underwater.offsetHeight || window.innerHeight;
+    const relativeUW = (scrollY - uwTop) / uwH;
+    targetScrollUW = Math.min(2.0, Math.max(-1.0, relativeUW));
+  }
+
+  window.addEventListener('resize', () => {
+    updateBoatWaterline();
+    updateScrollTarget();
+  }, {passive:true});
+
+  window.addEventListener('scroll', updateScrollTarget, {passive:true});
+
+  if (oceanImg.complete) {
+    updateBoatWaterline();
+  } else {
+    oceanImg.addEventListener('load', updateBoatWaterline);
+  }
+
+  // WebGL Cloud Sky Shader
+  const PUFF_UP = 0.34;
+  const PUFF_DOWN = 0.19;
+  const ERODE = 0.7;
+  const NEAR_CELL = 2.05;
+  const FAR_CELL = 3.95;
+  const FAR_MIX = 0.55;
+  const NEAR_DRIFT = 0.055;
+  const FAR_DRIFT = 0.026;
+  const CIRRUS_DRIFT = 0.014;
+  const PUFF_WMAX = 1.35;
+
+  const VERT_SRC = `
+attribute vec2 a_pos;
+void main(){ gl_Position = vec4(a_pos, 0.0, 1.0); }
+`;
+
+  const FRAG_SRC = `
+#ifdef GL_FRAGMENT_PRECISION_HIGH
+precision highp float;
+#else
+precision mediump float;
+#endif
+
+uniform vec2 uRes;
+uniform float uNearX, uFarX, uCirrusX;
+uniform float uCoverage, uSize, uSoftness, uShadow, uCirrus;
+uniform vec3 uHorizon, uCloud;
+uniform vec2 uParallax;
+
+vec2 hash22(vec2 p){
+  vec3 q = fract(vec3(p.xyx) * vec3(0.1031, 0.1030, 0.0973));
+  q += dot(q, q.yzx + 33.33);
+  return fract((q.xx + q.yz) * q.zy);
+}
+
+float hash12(vec2 p){
+  vec3 q = fract(vec3(p.xyx) * 0.1031);
+  q += dot(q, q.yzx + 33.33);
+  return fract((q.x + q.y) * q.z);
+}
+
+float vnoise(vec2 x){
+  vec2 i = floor(x), f = fract(x);
+  f = f * f * (3.0 - 2.0 * f);
+  return mix(mix(hash12(i), hash12(i + vec2(1.0, 0.0)), f.x),
+             mix(hash12(i + vec2(0.0, 1.0)), hash12(i + vec2(1.0, 1.0)), f.x), f.y);
+}
+
+float fbmFast(vec2 p){
+  return 0.55 * vnoise(p) + 0.30 * vnoise(p * 2.08) + 0.15 * vnoise(p * 4.15);
+}
+
+vec2 blobs(vec2 uv, float seed){
+  vec2 id = floor(uv), f = fract(uv);
+  float best = -1e4;
+  float wsum = 0.0, ysum = 0.0;
+  float wMax = min(${PUFF_WMAX.toFixed(3)}, 0.65 * uSize);
+
+  for (int j = -1; j <= 1; j++){
+    for (int i = -1; i <= 1; i++){
+      vec2 o = vec2(float(i), float(j));
+      vec2 h = hash22(id + o + seed);
+      if (fract(h.x * 29.1) > uCoverage) continue;
+
+      vec2 c = o + 0.15 + h * 0.7;
+      float w = min(${PUFF_WMAX.toFixed(3)}, (0.28 + 0.42 * fract(h.y * 19.7)) * uSize);
+      vec2 d = f - c;
+
+      float ry = (d.y > 0.0 ? ${PUFF_UP.toFixed(3)} : ${PUFF_DOWN.toFixed(3)}) * uSize * (0.8 + 0.5 * fract(h.y * 7.3));
+      float e = length(vec2(d.x / max(w, 1e-3), d.y / max(ry, 1e-3)));
+      float val = 1.0 - e;
+      float yN = d.y / max(ry, 1e-3);
+
+      if (val > best){
+        float k = exp(10.0 * (best - val));
+        wsum = wsum * k + 1.0;
+        ysum = ysum * k + yN;
+        best = val;
+      } else {
+        float g = exp(10.0 * (val - best));
+        wsum += g;
+        ysum += g * yN;
+      }
+    }
+  }
+  return vec2(best, ysum / max(wsum, 1e-4));
+}
+
+vec2 cloudField(vec2 uv, float seed, float detailScale){
+  vec2 b = blobs(uv, seed);
+  float n = fbmFast(uv * detailScale + seed * 3.1);
+  return vec2(b.x - (1.0 - n) * ${ERODE.toFixed(3)}, b.y);
+}
+
+vec3 shadeCloud(float dyNorm, vec3 sky){
+  float t = smoothstep(-0.95, 0.25, dyNorm);
+  vec3 base = mix(uCloud * 0.58, sky, 0.32);
+  return mix(mix(uCloud, base, uShadow), uCloud, t);
+}
+
+void main(){
+  vec2 frag = gl_FragCoord.xy / max(uRes.y, 1.0);
+  vec2 p = vec2(frag.x, frag.y);
+
+  vec4 col = vec4(0.0);
+
+  if (uCirrus > 0.0) {
+    vec2 cuv = vec2(p.x * 1.6 + uCirrusX, p.y * 6.5);
+    float veil = fbmFast(cuv) * smoothstep(0.24, 0.55, fbmFast(cuv * 2.3 + 9.0));
+    veil *= smoothstep(0.15, 0.7, p.y);
+    float ca = veil * uCirrus * 0.45;
+    col = vec4(uCloud, ca);
+  }
+
+  vec2 fuv = vec2(p.x + uFarX, p.y) * ${FAR_CELL.toFixed(3)} + uParallax * 0.4;
+  vec2 fd = cloudField(fuv, 17.0, 11.0);
+  float fa = clamp(fd.x * uSoftness, 0.0, 1.0);
+  if (fa > 0.0) {
+    vec3 lit = shadeCloud(fd.y, uHorizon);
+    vec3 farLit = mix(lit, uHorizon, ${FAR_MIX.toFixed(3)});
+    float farAlpha = fa * 0.85;
+    col.rgb = mix(col.rgb, farLit, farAlpha);
+    col.a = max(col.a, farAlpha);
+  }
+
+  vec2 nuv = vec2(p.x + uNearX, p.y) * ${NEAR_CELL.toFixed(3)} + uParallax;
+  vec2 nd = cloudField(nuv, 3.0, 9.0);
+  float na = clamp(nd.x * uSoftness, 0.0, 1.0);
+  if (na > 0.0) {
+    vec3 lit = shadeCloud(nd.y, uHorizon);
+    float aboveSelf = smoothstep(-0.2, 0.6, nd.y);
+    lit *= 1.0 - 0.20 * uShadow * aboveSelf;
+    col.rgb = mix(col.rgb, lit, na);
+    col.a = max(col.a, na);
+  }
+
+  gl_FragColor = col;
+}
+`;
+
+  function compile(gl, type, src) {
+    const sh = gl.createShader(type);
+    if (!sh) return null;
+    gl.shaderSource(sh, src);
+    gl.compileShader(sh);
+    if (!gl.getShaderParameter(sh, gl.COMPILE_STATUS)) {
+      gl.deleteShader(sh);
+      return null;
+    }
+    return sh;
+  }
+
+  const gl = canvas.getContext("webgl", { alpha: true, antialias: false, depth: false, premultipliedAlpha: false });
+  const ptrHero = { x: 0, y: 0, inside: false };
+  let leanXHero = 0, leanYHero = 0;
+  let uLocs = null;
+  let nearX = 0, farX = 0, cirrusX = 0;
+
+  if (gl) {
+    const vs = compile(gl, gl.VERTEX_SHADER, VERT_SRC);
+    const fs = compile(gl, gl.FRAGMENT_SHADER, FRAG_SRC);
+    const prog = gl.createProgram();
+
+    gl.attachShader(prog, vs);
+    gl.attachShader(prog, fs);
+    gl.linkProgram(prog);
+
+    if (gl.getProgramParameter(prog, gl.LINK_STATUS)) {
+      gl.useProgram(prog);
+      const buf = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+      const aPos = gl.getAttribLocation(prog, "a_pos");
+      gl.enableVertexAttribArray(aPos);
+      gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
+
+      const cache = {};
+      uLocs = (name) => {
+        if (!(name in cache)) cache[name] = gl.getUniformLocation(prog, name);
+        return cache[name];
+      };
+    }
+  }
+
+  let last = performance.now();
+
+  function animate(now) {
+    const dt = Math.min(0.05, (now - last) / 1000);
+    last = now;
+    const timeSec = now * 0.001;
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+
+    currentScroll += (targetScroll - currentScroll) * 0.11;
+    currentScrollUW += (targetScrollUW - currentScrollUW) * 0.11;
+
+    const kHero = 1 - Math.exp(-50 * 0.12 * dt);
+    leanXHero += ((ptrHero.inside ? ptrHero.x : 0) - leanXHero) * kHero;
+    leanYHero += ((ptrHero.inside ? ptrHero.y : 0) - leanYHero) * kHero;
+
+    // RENDER HERO WEBGL CLOUDS
+    if (gl && uLocs) {
+      const rate = 1.28 * (1 + leanXHero * 3.0);
+      nearX = (nearX - NEAR_DRIFT * rate * dt) % 1000;
+      farX = (farX - FAR_DRIFT * rate * dt) % 1000;
+      cirrusX = (cirrusX - CIRRUS_DRIFT * rate * dt) % 1000;
+
+      const renderScale = Math.min(window.devicePixelRatio || 1, 1.2) * 0.75;
+      const cw = hero.clientWidth || w;
+      const ch = hero.clientHeight || h;
+      const bw = Math.max(1, Math.round(cw * renderScale));
+      const bh = Math.max(1, Math.round(ch * renderScale));
+
+      if (canvas.width !== bw || canvas.height !== bh) {
+        canvas.width = bw;
+        canvas.height = bh;
+      }
+      gl.viewport(0, 0, bw, bh);
+
+      gl.uniform2f(uLocs("uRes"), bw, bh);
+      gl.uniform1f(uLocs("uNearX"), nearX);
+      gl.uniform1f(uLocs("uFarX"), farX);
+      gl.uniform1f(uLocs("uCirrusX"), cirrusX);
+      gl.uniform1f(uLocs("uCoverage"), 0.98);
+      gl.uniform1f(uLocs("uSize"), 0.75);
+      gl.uniform1f(uLocs("uSoftness"), 2.45);
+      gl.uniform1f(uLocs("uShadow"), 0.65);
+      gl.uniform1f(uLocs("uCirrus"), 0.85);
+      gl.uniform2f(uLocs("uParallax"), -leanXHero * 0.20, -leanYHero * 0.15);
+      gl.uniform3f(uLocs("uHorizon"), 0.706, 0.824, 0.941);
+      gl.uniform3f(uCloud = uLocs("uCloud"), 1.0, 1.0, 1.0);
+
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+    }
+
+    // 1. HERO PARALLAX
+    const sunX = currentScroll * (w * 0.015) + leanXHero * 6;
+    const sunY = currentScroll * (h * 0.12) - leanYHero * 5;
+    sunImg.style.transform = `translate3d(${sunX}px, ${sunY}px, 0)`;
+
+    const islandX = -currentScroll * (w * 0.008) - leanXHero * 6;
+    const islandY = currentScroll * (h * 0.035) - leanYHero * 3;
+    islandImg.style.transform = `translate3d(${islandX}px, ${islandY}px, 0)`;
+
+    const treesX = currentScroll * (w * 0.045) - leanXHero * 16;
+    const treesY = currentScroll * (h * 0.12);
+    treesImg.style.transform = `translate3d(${treesX}px, ${treesY}px, 0)`;
+
+    const boatTravel = (w * 0.75) * 0.70;
+    const boatProgress = Math.min(1.0, currentScroll);
+    const boatX = boatProgress * boatTravel;
+    const boatBobY = Math.sin(timeSec * 2.8) * 3.5;
+    const boatTilt = Math.cos(timeSec * 2.8) * 2.2;
+    boatWrapper.style.transform = `translate3d(${boatX}px, ${boatBobY}px, 0) rotate(${boatTilt}deg)`;
+
+    const eagleProg = Math.min(1.8, currentScroll * 1.35);
+    const eagleX = eagleProg * (w * 0.65) + Math.sin(timeSec * 1.8) * 12;
+    const eagleY = -Math.pow(eagleProg, 0.82) * (h * 0.38) + Math.cos(timeSec * 2.2) * 8;
+    const eagleBank = -6 + eagleProg * 22 + Math.sin(timeSec * 2.0) * 3.5;
+    eagle.style.transform = `translate3d(${eagleX}px, ${eagleY}px, 0) rotate(${eagleBank}deg)`;
+
+    const topTreeX = currentScroll * (w * 0.055);
+    const topTreeY = -currentScroll * (h * 0.22);
+    topTreeImg.style.transform = `translate3d(${topTreeX}px, ${topTreeY}px, 0)`;
+
+    // 2. SECTION 2 PARALLAX
+    const sUW = currentScrollUW;
+    const centerY = -sUW * (h * 0.018);
+    uwUpperCenterWrapper.style.transform = `translate3d(-50%, calc(-50% + ${centerY}px), 0)`;
+
+    if (uwPackagesHeader) {
+      const revealProgress = Math.min(1.0, Math.max(0.0, (sUW + 0.95) / 0.72));
+      const blurAmount = (1.0 - revealProgress) * 16;
+      const opacityAmount = Math.pow(revealProgress, 1.2);
+      const shiftY = (1.0 - revealProgress) * 35;
+
+      uwPackagesHeader.style.opacity = opacityAmount.toFixed(3);
+      uwPackagesHeader.style.filter = blurAmount <= 0.05 ? 'none' : `blur(${blurAmount.toFixed(1)}px)`;
+      uwPackagesHeader.style.transform = `translate3d(0, ${shiftY.toFixed(1)}px, 0)`;
+    }
+
+    const entryProgress = Math.min(0, sUW);
+    const topLeftEntryX = entryProgress * (w * 0.18);
+    const topLeftScrollX = sUW * (w * 0.02);
+    const topLeftY = sUW * (h * 0.075);
+    uwTopLeft.style.transform = `translate3d(${topLeftEntryX + topLeftScrollX}px, ${topLeftY}px, 0)`;
+
+    const topRightEntryX = -entryProgress * (w * 0.18);
+    const topRightScrollX = -sUW * (w * 0.02);
+    const topRightY = sUW * (h * 0.075);
+    uwTopRight.style.transform = `translate3d(${topRightEntryX + topRightScrollX}px, ${topRightY}px, 0)`;
+
+    const personProg = sUW;
+    const personX = personProg * (w * 0.16) + Math.sin(timeSec * 2.0) * 8;
+    const personY = -personProg * (h * 0.04) + Math.cos(timeSec * 1.7) * 6;
+    const personTilt = Math.sin(timeSec * 1.8) * 2.2;
+    uwPerson.style.transform = `translate3d(${personX}px, ${personY}px, 0) rotate(${personTilt}deg)`;
+
+    const fishProg = sUW;
+    const fishX = -fishProg * (w * 0.52) - Math.sin(timeSec * 3.2) * 14;
+    const fishY = Math.sin(timeSec * 2.4) * 8 - fishProg * (h * 0.04);
+    const fishTilt = -Math.cos(timeSec * 2.6) * 2.2;
+    uwFish.style.transform = `translate3d(${fishX}px, ${fishY}px, 0) rotate(${fishTilt}deg) scaleX(-1)`;
+
+    const fitProgress = Math.min(0, sUW);
+    const botLeftX = fitProgress * (w * 0.06);
+    const botRightX = -fitProgress * (w * 0.06);
+    const bottomRiseY = fitProgress * (h * 0.06);
+    uwBottomLeft.style.transform = `translate3d(${botLeftX}px, ${bottomRiseY}px, 0)`;
+    uwBottomRight.style.transform = `translate3d(${botRightX}px, ${bottomRiseY}px, 0)`;
+
+    const waterEntryProgress = Math.min(1.0, Math.max(0.0, sUW + 1.0));
+    const colorIntensity = waterEntryProgress * 0.45;
+    const depthIntensity = waterEntryProgress * 0.38;
+    if (uwFilterOverlay) uwFilterOverlay.style.opacity = colorIntensity.toFixed(3);
+    if (uwDepthOverlay) uwDepthOverlay.style.opacity = depthIntensity.toFixed(3);
+
+    const centerOpacity = 0.65 + (waterEntryProgress * 0.35);
+    uwUpperCenterWrapper.style.opacity = centerOpacity.toFixed(3);
+    if (uwCenterTint) uwCenterTint.style.opacity = colorIntensity.toFixed(3);
+    if (uwCenterDepth) uwCenterDepth.style.opacity = depthIntensity.toFixed(3);
+
+    // 3. SECTION 3 PARALLAX, CLAMP & SLOW TREE STEM GLIDE
+    const sec3Top = section3.offsetTop;
+    const sec3Height = section3.offsetHeight || h;
+
+    // Ocean approaches smoothly from below, docks at 0 and stops
+    const oceanApproachDist = 140;
+    const distToSec3 = sec3Top - scrollY;
+    const oceanProgress = Math.min(1.0, Math.max(0.0, 1.0 - (distToSec3 / h)));
+
+    if (sec3OceanWrapper) {
+      const oceanY = Math.max(0, (1.0 - oceanProgress) * oceanApproachDist);
+      sec3OceanWrapper.style.transform = `translate3d(0, ${oceanY.toFixed(1)}px, 0)`;
+    }
+
+    if (sec3GirlWrapper) {
+      const girlProgress = Math.min(1.0, Math.max(0.0, (scrollY - (sec3Top - h * 0.7)) / (sec3Height * 0.8)));
+      const girlY = -(girlProgress * 26) + Math.sin(timeSec * 1.6) * 3;
+      sec3GirlWrapper.style.transform = `translate3d(0, ${girlY.toFixed(1)}px, 0)`;
+    }
+
+    // Tree Stem Glide: Much slower, very subtle descent, no blue filter
+    if (treestemWrapper) {
+      const stemDist = Math.max(0, scrollY - (sec3Top - h));
+      const stemMoveY = Math.min(32, stemDist * 0.024);
+      treestemWrapper.style.transform = `translate3d(-50%, calc(-50% + ${stemMoveY.toFixed(1)}px), 0)`;
+    }
+
+    // Subtle independent parallax for the illustrations and text below section 3.
+    if (!prefersReducedMotion) {
+      belowSec3Parallax.forEach((element) => {
+        const rect = element.getBoundingClientRect();
+        if (rect.bottom < -120 || rect.top > h + 120) return;
+        const centerOffset = (rect.top + rect.height / 2 - h / 2) / h;
+        const direction = Number(element.dataset.parallaxDirection || 1);
+        // Slow container travel below section 3; character reveal timing stays unchanged.
+        const travel = 38;
+        const limit = 20;
+        const moveY = Math.max(-limit, Math.min(limit, centerOffset * -travel * direction));
+        element.style.transform = `translate3d(0, ${moveY.toFixed(1)}px, 0)`;
+      });
+    }
+
+    requestAnimationFrame(animate);
+  }
+
+  // Pointer tracking
+  const trackHero = (e) => {
+    const r = hero.getBoundingClientRect();
+    if (r.width <= 0 || r.height <= 0) return;
+    ptrHero.x = ((e.clientX - r.left) / r.width) * 2 - 1;
+    ptrHero.y = 1 - ((e.clientY - r.top) / r.height) * 2;
+    ptrHero.inside = true;
+  };
+  hero.addEventListener("pointermove", trackHero, {passive:true});
+  hero.addEventListener("pointerenter", trackHero, {passive:true});
+  hero.addEventListener("pointerleave", () => { ptrHero.inside = false; }, {passive:true});
+
+  // 3D DEPTH CAROUSEL (SECTION 2)
+  const clamp = (v, min, max) => Math.min(Math.max(v, min), max);
+  const normalizeItem = it => (typeof it === 'string' ? { image: it, alt: '' } : it);
+
+  const MEMORY_ITEMS = [
+    { image: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80', alt: 'Scuba Diving with Sea Turtles' },
+    { image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80', alt: 'Radhanagar White Sands' },
+    { image: 'https://images.unsplash.com/photo-1682687220063-4742bd7fd538?auto=format&fit=crop&w=1200&q=80', alt: 'Vibrant Coral Reef Exploration' },
+    { image: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=80', alt: 'Manta Rays in Turquoise Water' },
+    { image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80', alt: 'Sunset at Andaman Bay' },
+    { image: 'https://images.unsplash.com/photo-1437622368342-7a3d73a34c8f?auto=format&fit=crop&w=1200&q=80', alt: 'Gentle Sea Turtle Voyage' }
+  ];
+
+  function createDepthCarousel(container, options = {}) {
+    const cfg = Object.assign({
+      items: MEMORY_ITEMS,
+      cardWidth: 290,
+      cardHeight: 390,
+      radius: 18,
+      depth: 210,
+      spread: 92,
+      tilt: 18,
+      tiltDirection: 'right',
+      perspective: 1500,
+      visibleCards: 4,
+      falloff: 0.22,
+      duration: 520,
+      ease: 'power2.out',
+      autoplay: true,
+      autoplayDelay: 3400,
+      loop: true,
+      showControls: true,
+      showIndicators: true,
+      onCardClick: null,
+      className: ''
+    }, options);
+
+    const data = (Array.isArray(cfg.items) ? cfg.items : []).map(normalizeItem);
+    const count = data.length;
+
+    let pos = 0;
+    let focus = 0;
+    let scale = 1;
+    let tween = null;
+    let drag = null;
+    let wheelTimer = null;
+    let autoTimer = null;
+    let activeIndex = 0;
+
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const root = document.createElement('div');
+    root.className = `depth-carousel ${cfg.className}`.trim();
+    root.style.setProperty('--dc-perspective', `${cfg.perspective}px`);
+    root.setAttribute('role', 'group');
+    root.setAttribute('aria-roledescription', 'carousel');
+    root.setAttribute('aria-label', 'Memories 3D Carousel');
+    root.setAttribute('tabindex', '0');
+
+    const stage = document.createElement('div');
+    stage.className = 'depth-carousel__stage';
+    root.appendChild(stage);
+
+    const cardEls = [];
+    const tintEls = [];
+
+    data.forEach((item, i) => {
+      const card = document.createElement('div');
+      card.className = 'depth-carousel__card';
+      card.style.width = `${cfg.cardWidth}px`;
+      card.style.height = `${cfg.cardHeight}px`;
+      card.style.borderRadius = `${cfg.radius}px`;
+      card.setAttribute('aria-roledescription', 'slide');
+      card.setAttribute('aria-label', `${i + 1} of ${count}`);
+      card.setAttribute('aria-hidden', activeIndex !== i);
+
+      const img = document.createElement('img');
+      img.className = 'depth-carousel__img';
+      img.src = item.image;
+      img.alt = item.alt || '';
+      img.draggable = false;
+      img.decoding = 'async';
+
+      const tint = document.createElement('span');
+      tint.className = 'depth-carousel__tint';
+
+      card.appendChild(img);
+      card.appendChild(tint);
+      stage.appendChild(card);
+
+      cardEls.push(card);
+      tintEls.push(tint);
+
+      card.addEventListener('click', () => {
+        if (drag?.moved) return;
+        if (typeof cfg.onCardClick === 'function') {
+          cfg.onCardClick(item, i, activeIndex === i);
+        }
+        if (activeIndex !== i) {
+          setFocus(i, true);
+        }
+      });
+    });
+
+    let prevBtn, nextBtn;
+    if (cfg.showControls && count > 1) {
+      prevBtn = document.createElement('button');
+      prevBtn.type = 'button';
+      prevBtn.className = 'depth-carousel__arrow depth-carousel__arrow--prev';
+      prevBtn.setAttribute('aria-label', 'Previous memory');
+      prevBtn.innerHTML = `
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+          <path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>`;
+      prevBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        navigateBy(-1);
+      });
+
+      nextBtn = document.createElement('button');
+      nextBtn.type = 'button';
+      nextBtn.className = 'depth-carousel__arrow depth-carousel__arrow--next';
+      nextBtn.setAttribute('aria-label', 'Next memory');
+      nextBtn.innerHTML = `
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+          <path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>`;
+      nextBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        navigateBy(1);
+      });
+
+      root.appendChild(prevBtn);
+      root.appendChild(nextBtn);
+    }
+
+    let dotsContainer;
+    const dotEls = [];
+    if (cfg.showIndicators && count > 1) {
+      dotsContainer = document.createElement('div');
+      dotsContainer.className = 'depth-carousel__dots';
+      dotsContainer.setAttribute('role', 'tablist');
+
+      data.forEach((_, i) => {
+        const dot = document.createElement('button');
+        dot.type = 'button';
+        dot.className = `depth-carousel__dot${i === 0 ? ' is-active' : ''}`;
+        dot.setAttribute('role', 'tab');
+        dot.setAttribute('aria-selected', i === 0);
+        dot.setAttribute('aria-label', `Go to memory ${i + 1}`);
+        dot.addEventListener('click', (e) => {
+          e.stopPropagation();
+          setFocus(i, true);
+        });
+
+        dotsContainer.appendChild(dot);
+        dotEls.push(dot);
+      });
+
+      root.appendChild(dotsContainer);
+    }
+
+    container.appendChild(root);
+
+    function layout(currentPos) {
+      if (!count) return;
+      const dir = cfg.tiltDirection === 'left' ? -1 : 1;
+
+      for (let i = 0; i < count; i++) {
+        const el = cardEls[i];
+        if (!el) continue;
+
+        let d = i - currentPos;
+        if (cfg.loop && count > 1) {
+          d = ((d % count) + count) % count;
+          if (d > count / 2) d -= count;
+        }
+
+        const back = Math.max(0, d);
+        const az = Math.abs(d);
+        const shown = az <= cfg.visibleCards + 0.5;
+
+        const tz = -cfg.depth * d;
+        const tx = dir * cfg.spread * d;
+        const ry = dir * cfg.tilt * clamp(d, 0, 1);
+
+        let opacity = d < 0 ? Math.max(0, 1 + d) : 1;
+        if (!shown) opacity = 0;
+
+        const zi = Math.round(2000 - d * 20);
+
+        el.style.transform = `translate3d(calc(-50% + ${tx.toFixed(1)}px), -50%, ${tz.toFixed(1)}px) scale(${scale}) rotateY(${ry.toFixed(2)}deg)`;
+        el.style.opacity = opacity.toFixed(3);
+        el.style.zIndex = String(zi);
+        el.style.pointerEvents = shown && opacity > 0.05 ? 'auto' : 'none';
+
+        const ov = tintEls[i];
+        if (ov) {
+          ov.style.opacity = clamp(back * cfg.falloff * 1.35, 0, 0.78).toFixed(3);
+        }
+      }
+    }
+
+    function notify(idx) {
+      activeIndex = idx;
+      cardEls.forEach((card, i) => {
+        card.setAttribute('aria-hidden', i !== idx);
+      });
+      dotEls.forEach((dot, i) => {
+        const isActive = i === idx;
+        dot.classList.toggle('is-active', isActive);
+        dot.setAttribute('aria-selected', isActive);
+      });
+    }
+
+    function tweenTo(target, animate) {
+      if (tween) tween.kill();
+      const proxy = { p: pos };
+      const dur = animate && !reducedMotion ? cfg.duration / 1000 : 0;
+      
+      tween = gsap.to(proxy, {
+        p: target,
+        duration: dur,
+        ease: cfg.ease,
+        overwrite: 'auto',
+        onUpdate: () => {
+          pos = proxy.p;
+          layout(proxy.p);
+        },
+        onComplete: () => {
+          if (count > 0) pos = ((pos % count) + count) % count;
+          proxy.p = pos;
+          layout(pos);
+        }
+      });
+    }
+
+    function setFocus(rawIndex, animate = true) {
+      if (!count) return;
+      const idx = cfg.loop ? ((rawIndex % count) + count) % count : clamp(rawIndex, 0, count - 1);
+      let delta = idx - pos;
+      if (cfg.loop && count > 1) {
+        delta = ((delta % count) + count) % count;
+        if (delta > count / 2) delta -= count;
+      }
+      tweenTo(pos + delta, animate);
+      if (idx !== focus) {
+        focus = idx;
+        notify(idx);
+      }
+    }
+
+    function navigateBy(step) {
+      setFocus(focus + step, true);
+    }
+
+    const ro = new ResizeObserver(entries => {
+      const w = entries[0].contentRect.width;
+      const needed = cfg.cardWidth + Math.abs(cfg.spread) * 2 + 80;
+      scale = clamp(w / needed, 0.55, 1);
+      layout(pos);
+    });
+    ro.observe(root);
+
+    root.addEventListener('wheel', e => {
+      if (count < 2) return;
+      e.preventDefault();
+      if (tween) tween.kill();
+      const raw = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+      const delta = e.deltaMode === 1 ? raw * 24 : raw;
+      const step = clamp(delta / (cfg.cardWidth * 0.9), -0.6, 0.6);
+      pos += step;
+      layout(pos);
+      if (wheelTimer) clearTimeout(wheelTimer);
+      wheelTimer = setTimeout(() => setFocus(Math.round(pos), true), 130);
+    }, { passive: false });
+
+    let rAFScheduled = false;
+    root.addEventListener('pointerdown', e => {
+      if (count < 2) return;
+      if (tween) tween.kill();
+      drag = {
+        x: e.clientX,
+        startPos: pos,
+        lastX: e.clientX,
+        lastT: performance.now(),
+        v: 0,
+        moved: false,
+        id: e.pointerId
+      };
+    });
+
+    root.addEventListener('pointermove', e => {
+      if (!drag) return;
+      const stepPx = Math.max(cfg.cardWidth * 0.65 * scale, 45);
+      const dx = e.clientX - drag.x;
+      if (!drag.moved && Math.abs(dx) > 4) {
+        drag.moved = true;
+        root.setPointerCapture(drag.id);
+      }
+      if (!drag.moved) return;
+
+      const now = performance.now();
+      const dt = Math.max(now - drag.lastT, 1);
+      drag.v = (e.clientX - drag.lastX) / dt;
+      drag.lastX = e.clientX;
+      drag.lastT = now;
+      pos = drag.startPos - dx / stepPx;
+
+      if (!rAFScheduled) {
+        rAFScheduled = true;
+        requestAnimationFrame(() => {
+          layout(pos);
+          rAFScheduled = false;
+        });
+      }
+    });
+
+    const onPointerEnd = () => {
+      if (!drag) return;
+      const wasMoved = drag.moved;
+      const dragData = drag;
+      drag = null;
+      if (!wasMoved) return;
+      const stepPx = Math.max(cfg.cardWidth * 0.65 * scale, 45);
+      const projected = pos - (dragData.v * 160) / stepPx;
+      setFocus(Math.round(projected), true);
+    };
+
+    root.addEventListener('pointerup', onPointerEnd);
+    root.addEventListener('pointercancel', onPointerEnd);
+
+    root.addEventListener('keydown', e => {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        navigateBy(-1);
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        navigateBy(1);
+      }
+    });
+
+    if (cfg.autoplay && !reducedMotion && count > 1) {
+      let hovered = false;
+      let focused = false;
+
+      const stop = () => {
+        if (autoTimer) clearInterval(autoTimer);
+        autoTimer = null;
+      };
+      const start = () => {
+        stop();
+        autoTimer = setInterval(() => {
+          if (!hovered && !focused) navigateBy(1);
+        }, Math.max(cfg.autoplayDelay, 800));
+      };
+
+      root.addEventListener('mouseenter', () => { hovered = true; });
+      root.addEventListener('mouseleave', () => { hovered = false; });
+      root.addEventListener('focusin', () => { focused = true; });
+      root.addEventListener('focusout', () => { focused = false; });
+      start();
+    }
+
+    layout(pos);
+
+    return {
+      next: () => navigateBy(1),
+      prev: () => navigateBy(-1),
+      goTo: (idx) => setFocus(idx, true)
+    };
+  }
+
+  // Init Section 2 Depth Carousel
+  const carouselContainer = document.getElementById('underwaterDepthCarousel');
+  if (carouselContainer) {
+    createDepthCarousel(carouselContainer, {
+      items: MEMORY_ITEMS,
+      autoplay: true,
+      autoplayDelay: 3400,
+      onCardClick: (item) => {
+        openFullscreenImage(item.image, item.alt, item);
+      }
+    });
+  }
+
+  // Start asset tracking only after dynamic carousel images exist.
+  initSplashScreen();
+
+  // ========================================================
+  // SECTION 3 EXPEDITION PACKAGES FINITE SCROLLER LOGIC
+  // ========================================================
+  const packagesScroller = document.getElementById('packagesScroller');
+  const packagesList = document.getElementById('packagesList');
+
+  if (packagesScroller && packagesList) {
+    const allCards = Array.from(packagesList.querySelectorAll('li'));
+    let ticking = false;
+
+    function updateCards() {
+      const scrollerRect = packagesScroller.getBoundingClientRect();
+      const centerX = scrollerRect.left + (scrollerRect.width / 2);
+      const maxDist = scrollerRect.width / 2;
+
+      let closestItem = null;
+      let minDistance = Infinity;
+
+      allCards.forEach((item) => {
+        const rect = item.getBoundingClientRect();
+        const itemCenter = rect.left + (rect.width / 2);
+        const distance = itemCenter - centerX;
+        const absDist = Math.abs(distance);
+
+        if (absDist < minDistance) {
+          minDistance = absDist;
+          closestItem = item;
+        }
+
+        if (absDist < scrollerRect.width) {
+          const norm = Math.max(-1, Math.min(1, distance / maxDist));
+          const layer = item.querySelector('.parallax-layer');
+          if (layer) {
+            layer.style.transform = `translateX(${norm * -12}px)`;
+          }
+        }
+      });
+
+      allCards.forEach((item) => {
+        if (item === closestItem) {
+          item.classList.add('active');
+        } else {
+          item.classList.remove('active');
+        }
+      });
+
+      ticking = false;
+    }
+
+    function onScroll() {
+      if (!ticking) {
+        requestAnimationFrame(updateCards);
+        ticking = true;
+      }
+    }
+
+    packagesScroller.addEventListener('wheel', (e) => {
+      if (e.deltaY !== 0) {
+        e.preventDefault();
+        packagesScroller.scrollLeft += e.deltaY * 1.2;
+      }
+    }, { passive: false });
+
+    let isDown = false;
+    let startX, scrollLeft;
+
+    packagesScroller.addEventListener('mousedown', (e) => {
+      isDown = true;
+      startX = e.pageX - packagesScroller.offsetLeft;
+      scrollLeft = packagesScroller.scrollLeft;
+    });
+
+    window.addEventListener('mouseup', () => { isDown = false; });
+
+    packagesScroller.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - packagesScroller.offsetLeft;
+      const walk = (x - startX) * 1.5;
+      packagesScroller.scrollLeft = scrollLeft - walk;
+    });
+
+    packagesScroller.addEventListener('scroll', onScroll, { passive: true });
+
+    window.addEventListener('resize', () => {
+      onScroll();
+    }, { passive: true });
+
+    window.addEventListener('load', () => {
+      const initialCard = allCards[0];
+      if (initialCard) {
+        packagesScroller.scrollLeft = 0;
+      }
+      updateCards();
+    });
+  }
+
+  // Guest Reviews: seamless loop; first click/tap pauses, next click/tap anywhere resumes.
+  function initReviewsAutoScroll() {
+    const track = document.querySelector('.mono-review-track');
+    if (!track || track.dataset.autoScrollReady === 'true') return;
+    track.dataset.autoScrollReady = 'true';
+    let paused = false;
+    let rebuilding = false;
+    let halfWidth = 0;
+    const rebuildLoop = () => {
+      if (rebuilding) return;
+      rebuilding = true;
+      const originals = Array.from(track.children).filter(card => card.dataset.reviewClone !== 'true');
+      track.querySelectorAll('[data-review-clone="true"]').forEach(card => card.remove());
+      originals.forEach(card => { const clone=card.cloneNode(true);clone.dataset.reviewClone='true';clone.setAttribute('aria-hidden','true');track.appendChild(clone); });
+      requestAnimationFrame(()=>{halfWidth=track.scrollWidth/2;rebuilding=false;});
+    };
+    rebuildLoop();
+    new MutationObserver(()=>{if(!rebuilding)rebuildLoop();}).observe(track,{childList:true});
+    let last=performance.now();
+    const step=now=>{const delta=Math.min(40,now-last);last=now;if(!paused&&halfWidth>track.clientWidth){track.scrollLeft+=(delta*.035);if(track.scrollLeft>=halfWidth)track.scrollLeft-=halfWidth;}requestAnimationFrame(step);};
+    requestAnimationFrame(step);
+    track.addEventListener('click',e=>{e.stopPropagation();paused=!paused;track.classList.toggle('review-paused',paused);});
+    document.addEventListener('click',()=>{if(paused){paused=false;track.classList.remove('review-paused');}});
+  }
+  initReviewsAutoScroll();
+
+    // Parallax scrolling logic on text headings: scrubbed pixel-by-pixel with scroll
+  const splitBlurTargets = document.querySelectorAll('.uw-packages-badge, .uw-packages-title, .uw-packages-desc, .sec3-packages-badge, .sec3-packages-title, .sec3-packages-desc, .mono-section .mono-heading, .mono-section .mono-kicker, .mono-section .mono-copy, #why-choose-us .mono-feature h3');
+  const splitNode = (node) => {
+    Array.from(node.childNodes).forEach((child) => {
+      if (child.nodeType === 3) {
+        const text = child.textContent;
+        if (!text.trim()) { node.replaceChild(document.createTextNode(text), child); return; }
+        const frag = document.createDocumentFragment();
+        const parts = text.split(/(\s+)/);
+        parts.forEach((part) => {
+          if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(' ')); return; }
+          const word = document.createElement('span');
+          word.className = 'split-blur-word';
+          Array.from(part).forEach((ch) => {
+            const c = document.createElement('span');
+            c.className = 'split-blur-char';
+            c.textContent = ch;
+            word.appendChild(c);
+          });
+          frag.appendChild(word);
+        });
+        node.replaceChild(frag, child);
+      } else if (child.nodeType === 1 && child.tagName !== 'BR') {
+        splitNode(child);
+      }
+    });
+  };
+
+  splitBlurTargets.forEach((h) => {
+    splitNode(h);
+  });
+
+  function updateTextParallax() {
+    const vh = window.innerHeight;
+    splitBlurTargets.forEach((heading) => {
+      const rect = heading.getBoundingClientRect();
+      const chars = heading.querySelectorAll('.split-blur-char');
+      if (!chars.length) return;
+
+      const elementProgress = 1 - (rect.top / (vh * 1.19));
+      const clamped = Math.max(0, Math.min(1, elementProgress));
+      const speedMultiplier = heading.closest('#why-choose-us') ? 3.75 : 3;
+
+      chars.forEach((char, idx) => {
+        const charProgress = Math.max(0, Math.min(1, (clamped - idx * (0.0107 / speedMultiplier)) / (0.5 / speedMultiplier)));
+        // Keep the 3x character-reveal rate (speedMultiplier) but reduce the
+        // vertical travel + blur back to the pre-3x magnitudes so text settles
+        // quickly and is visible at the bottom of the viewport instead of
+        // waiting until scrolled to the top. Parallax motion remains; scroll
+        // toward the top still fully resolves each heading.
+        const yOffset = (1 - charProgress) * 22;
+        const blurAmount = (1 - charProgress) * 4;
+        const opacity = charProgress;
+
+        char.style.transform = 'translate3d(0, ' + yOffset + 'px, 0)';
+        char.style.filter = 'blur(' + blurAmount + 'px)';
+        char.style.opacity = opacity;
+      });
+    });
+  }
+
+  window.addEventListener('scroll', updateTextParallax, { passive: true });
+  updateTextParallax();
+
+
+  // Typewriter effect on the Plan easy, Pay less description text — repeats on every scroll
+  const typeTarget = document.querySelector('#plan-easy .mono-copy');
+  if (typeTarget) {
+    const fullText = typeTarget.textContent.trim();
+    typeTarget.textContent = '';
+    const cursor = document.createElement('span');
+    cursor.className = 'text-type-cursor';
+    cursor.textContent = '|';
+    let typeTimer = null;
+    let isTyping = false;
+
+    const startTyping = () => {
+      if (isTyping) return;
+      isTyping = true;
+      typeTarget.textContent = '';
+      typeTarget.appendChild(cursor);
+      let i = 0;
+      if (typeTimer) clearInterval(typeTimer);
+      typeTimer = setInterval(() => {
+        if (i < fullText.length) {
+          typeTarget.insertBefore(document.createTextNode(fullText[i]), cursor);
+          i++;
+        } else {
+          clearInterval(typeTimer);
+          typeTimer = null;
+        }
+      }, 24);
+    };
+
+    const resetTyping = () => {
+      if (typeTimer) { clearInterval(typeTimer); typeTimer = null; }
+      isTyping = false;
+      typeTarget.textContent = '';
+    };
+
+    const typeObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          startTyping();
+        } else {
+          resetTyping();
+        }
+      });
+    }, { threshold: 0.3 });
+    typeObserver.observe(typeTarget);
+  }
+
+  // Circular loop text around the Plan easy, Pay less badge.
+  const circularText = document.getElementById('planCircularText');
+  if (circularText) {
+    circularText.innerHTML = '';
+    const circleString = 'PLAN EASY • PAY LESS • EXPERIENCE MORE • ';
+    const letters = Array.from(circleString);
+    const step = 360 / letters.length;
+    letters.forEach((ch, i) => {
+      const span = document.createElement('span');
+      span.textContent = ch;
+      span.style.transform = `rotate(${step * i}deg) translateY(-3.35rem)`;
+      circularText.appendChild(span);
+    });
+  }
+
+  window.toggleFaq = function(el) { if (el && el.parentElement) el.parentElement.classList.toggle('active'); };
+  window.toggleMoreFaqs = function() {
+    const wrapper=document.getElementById('extra-faqs-wrapper'), text=document.getElementById('faq-btn-text'), icon=document.getElementById('faq-btn-icon');
+    if(!wrapper||!text||!icon)return; const open=wrapper.classList.toggle('open');
+    text.textContent=open?'Collapse FAQs':'View More FAQs'; icon.className=`fa-solid ${open?'fa-circle-minus':'fa-circle-plus'}`;
+  };
+
+  // Global WhatsApp Booking function
+  window.bookDirectWhatsApp = function(pkgName) {
+    const msg = encodeURIComponent(`Hello Avinash Topo,\nI want to book the *${pkgName}* with XcurseWay Travels!\n\nPlease share the available slots and confirmation details.`);
+    window.open(`https://wa.me/919384608990?text=${msg}`, '_blank');
+  };
+
+  updateBoatWaterline();
+  updateScrollTarget();
+  requestAnimationFrame(animate);
+})();
+</script>
+<!-- Firebase App & Database -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+
+<script>
+(function() {
+  "use strict";
+
+  // Firebase Configuration (Item 7)
+  const firebaseConfig = {
+    apiKey: "@secret:GOOGLE_API_KEY",
+    authDomain: "xcurseway-travels.firebaseapp.com",
+    projectId: "xcurseway-travels",
+    storageBucket: "xcurseway-travels.firebasestorage.app",
+    messagingSenderId: "280152228558",
+    appId: "1:280152228558:web:bf9f43ed5e4dbd7fd9469f",
+    measurementId: "@secret:GOOGLE_ANALYTICS_MEASUREMENT_ID"
+  };
+
+  let db = null;
+  let isFirebaseAvailable = false;
+
+  try {
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+    db = firebase.database();
+    isFirebaseAvailable = true;
+    console.log("[XcurseWay] Firebase initialized successfully.");
+  } catch (err) {
+    console.warn("[XcurseWay] Firebase operating in backup mode:", err);
+  }
+
+  // Backup / Fallback Data (Item 10)
+  const BACKUP_DATA = {
+    packages: [
+      {
+        id: "pkg-1",
+        title: "Coral Reef Snorkeling",
+        tag: "Popular",
+        price: "₹3,499",
+        priceTag: "Per Person",
+        description: "Explore radiant marine life, shallow coral beds, and vibrant clownfish of Elephant Beach.",
+        rows: [
+          { bold: "Duration", normal: "4 Hours guided tour" },
+          { bold: "Inclusions", normal: "Speedboat ferry & gear" },
+          { bold: "Safety", normal: "Certified dive master" },
+          { bold: "Complimentary", normal: "Underwater HD video" }
+        ],
+        whatsappMsg: "Coral Reef Snorkeling package"
+      },
+      {
+        id: "pkg-2",
+        title: "Deep Sea Scuba Expedition",
+        tag: "Featured",
+        price: "₹5,999",
+        priceTag: "Per Person",
+        description: "Descend into Havelock's premier dive spots alongside manta rays, sea turtles, and coral walls.",
+        rows: [
+          { bold: "Dives", normal: "2 Open water guided dives" },
+          { bold: "Depth", normal: "Up to 18 meters depth" },
+          { bold: "Certification", normal: "PADI discovery briefing" },
+          { bold: "Perks", normal: "Breakfast & refreshments" }
+        ],
+        whatsappMsg: "Deep Sea Scuba Expedition package"
+      },
+      {
+        id: "pkg-3",
+        title: "Private Catamaran Cruise",
+        tag: "Luxury",
+        price: "₹18,500",
+        priceTag: "Private Charter",
+        description: "Sail across serene azure lagoons, toast to sunset views, and anchor in pristine secluded coves.",
+        rows: [
+          { bold: "Capacity", normal: "Up to 8 guests private" },
+          { bold: "Cuisine", normal: "Fresh island seafood platter" },
+          { bold: "Water Sports", normal: "Paddleboards & kayak gear" },
+          { bold: "Sunset", normal: "Champagne onboard toast" }
+        ],
+        whatsappMsg: "Private Catamaran Cruise package"
+      }
+    ],
+    memories: [
+      { image: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80', alt: 'Scuba Diving with Sea Turtles', badge: 'Marine Life', title: 'Sea Turtle Encounter', subtitle: 'Havelock Deep Reef', description: 'Glide alongside gentle sea turtles in crystalline Andaman water with our certified dive instructors.' },
+      { image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80', alt: 'Radhanagar White Sands', badge: 'Island Paradise', title: 'Radhanagar Beach', subtitle: "Asia's Crown Jewel", description: 'Silky powdered white sands and tranquil sunsets under towering native mahua forest canopies.' },
+      { image: 'https://images.unsplash.com/photo-1682687220063-4742bd7fd538?auto=format&fit=crop&w=1200&q=80', alt: 'Vibrant Coral Reef Exploration', badge: 'Reef Wonder', title: 'Coral Garden Exploration', subtitle: 'Elephant Beach Shallows', description: 'An intricate underwater kaleidoscope of brain corals, sea fans, and colorful damselfish.' },
+      { image: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=80', alt: 'Manta Rays in Turquoise Water', badge: 'Deep Blue', title: 'Manta Ray Crossing', subtitle: 'Neil Island Passage', description: 'Watch majestic manta rays swoop through warm equatorial currents in absolute harmony.' },
+      { image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80', alt: 'Sunset at Andaman Bay', badge: 'Golden Hour', title: 'Sunset at Chidiyatapu', subtitle: 'South Andaman Horizon', description: 'A breathtaking tapestry of violet, gold, and crimson reflected across gentle ocean waves.' },
+      { image: 'https://images.unsplash.com/photo-1437622368342-7a3d73a34c8f?auto=format&fit=crop&w=1200&q=80', alt: 'Gentle Sea Turtle Voyage', badge: 'Lagoon Peace', title: 'Emerald Cove Snorkel', subtitle: 'Cinque Island Marine Sanctuary', description: 'Untouched island sanctuaries preserved in their raw, breathtaking primordial beauty.' }
+    ],
+    reviews: [
+      { name: "Ananya Sharma", rating: 5, avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80", text: "XcurseWay planned our honeymoon in Havelock flawlessly! The scuba team was patient, kind, and took incredible 4K underwater photos of us with turtles." },
+      { name: "Rahul Verma", rating: 5, avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80", text: "Top-tier catamaran booking. Transparent pricing, no hidden tourist surcharges, and Avinash Topo was on call 24/7 to adjust our ferry schedules." },
+      { name: "Meera Nair", rating: 5, avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80", text: "Best decision of our Andaman trip. The private snorkeling spot was free from crowds. You genuinely experience more while paying less!" }
+    ],
+    faqs: [
+      { q: "1. Passport needed for Indians?", a: "No. Only Aadhar card, Voter ID, or any valid Government photo ID is required for Indian nationals traveling to the Andaman & Nicobar islands." },
+      { q: "2. Best time to visit Andaman?", a: "October through May offers calm seas, sunny tropical skies, maximum underwater visibility for scuba diving, and pleasant sea breezes." },
+      { q: "3. Are watersports safe for non-swimmers?", a: "Absolutely! All snorkeling, sea walking, and introductory scuba sessions include one-on-one certified PADI dive master accompaniment with life vests." },
+      { q: "4. How do inter-island ferries work?", a: "We coordinate private high-speed catamarans (Makruzz, Nautika, Green Ocean) with advance seat allocations so you never wait at docks." }
+    ],
+    socialMedia: [
+      { name: "Facebook", url: "https://www.facebook.com/", icon: "fa-brands fa-facebook-f" },
+      { name: "Instagram", url: "https://www.instagram.com/", icon: "fa-brands fa-instagram" },
+      { name: "LinkedIn", url: "https://www.linkedin.com/", icon: "fa-brands fa-linkedin-in" },
+      { name: "X", url: "https://x.com/", icon: "fa-brands fa-x-twitter" }
+    ],
+    contacts: [
+      { type: "WhatsApp", label: "+91 94742 84729", action: "https://wa.me/919474284729", icon: "fa-brands fa-whatsapp" },
+      { type: "Phone", label: "+91 94742 84729", action: "tel:+919474284729", icon: "fa-solid fa-phone" },
+      { type: "Email", label: "bookings@xcurseway.com", action: "mailto:bookings@xcurseway.com", icon: "fa-solid fa-envelope" },
+      { type: "Address", label: "Port Blair & Raipur, India", action: "#", icon: "fa-solid fa-location-dot" }
+    ]
+  };
+
+  // WhatsApp click tracking (Item 14)
+  window.trackWhatsAppInteraction = function(identifier, extraData) {
+    if (!isFirebaseAvailable || !db) return;
+    try {
+      db.ref('analytics/whatsappClicks').push({
+        identifier: identifier || 'whatsapp_button',
+        timestamp: firebase.database.ServerValue.TIMESTAMP,
+        isoTime: new Date().toISOString(),
+        details: extraData || {},
+        pageUrl: window.location.href,
+        userAgent: navigator.userAgent.substring(0, 100)
+      });
+    } catch (e) {
+      console.warn("[Analytics] WhatsApp tracking error:", e);
+    }
+  };
+
+  // Global WhatsApp booking trigger
+  const origBookDirect = window.bookDirectWhatsApp;
+  window.bookDirectWhatsApp = function(pkgName) {
+    window.trackWhatsAppInteraction("package_booking", { package: pkgName });
+    if (typeof origBookDirect === "function") {
+      origBookDirect(pkgName);
+    } else {
+      const msg = encodeURIComponent("Hello Avinash Topo,\nI want to book the *" + (pkgName || "Curated Package") + "* with XcurseWay Travels.");
+      window.open("https://wa.me/919474284729?text=" + msg, "_blank");
+    }
+  };
+
+  document.addEventListener('click', function(e) {
+    const waLink = e.target.closest('a[href*="wa.me"], a[href*="whatsapp.com"], [data-track-wa]');
+    if (waLink) {
+      const label = waLink.getAttribute('data-track-wa') || waLink.getAttribute('aria-label') || waLink.textContent.trim().substring(0, 30) || 'whatsapp_link';
+      window.trackWhatsAppInteraction(label, { href: waLink.href });
+    }
+  });
+
+  // Dynamic Renderers
+  function renderPackages(pkgs) {
+    const container = document.querySelector('.package-card-container') || document.querySelector('#section3 .cards-wrapper');
+    if (!container || !pkgs || !pkgs.length) return;
+
+    container.innerHTML = '';
+    pkgs.forEach((p) => {
+      const card = document.createElement('div');
+      card.className = 'pkg-card glass-panel';
+      card.style.cssText = 'background:rgba(17,18,21,0.78);border:1px solid rgba(255,255,255,0.12);border-radius:24px;padding:2rem;display:flex;flex-direction:column;justify-content:space-between;gap:1.5rem;transition:border-color .3s,box-shadow .3s;';
+      card.onmouseenter = () => { card.style.borderColor = 'rgba(255,255,255,0.35)'; card.style.boxShadow = '0 20px 45px rgba(0,0,0,0.6)'; };
+      card.onmouseleave = () => { card.style.borderColor = 'rgba(255,255,255,0.12)'; card.style.boxShadow = 'none'; };
+
+      const rowsHtml = (p.rows || []).map(r => `
+        <div style="display:flex;justify-content:space-between;padding:0.6rem 0;border-bottom:1px solid rgba(255,255,255,0.08);font-size:0.92rem;">
+          <strong style="color:#ffffff;font-weight:700;">${r.bold || ''}</strong>
+          <span style="color:#a1a1aa;font-weight:400;">${r.normal || ''}</span>
+        </div>
+      `).join('');
+
+      card.innerHTML = `
+        <div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+            <span style="background:rgba(255,255,255,0.1);color:#60a5fa;padding:0.3rem 0.8rem;border-radius:999px;font-size:0.75rem;font-weight:700;letter-spacing:0.05em;border:1px solid rgba(96,165,250,0.3);">${p.tag || 'Special'}</span>
+            <div style="text-align:right;">
+              <span style="font-size:1.6rem;font-weight:900;color:#ffffff;">${p.price || ''}</span>
+              <span style="font-size:0.75rem;color:#71717a;display:block;">${p.priceTag || 'Per Person'}</span>
+            </div>
+          </div>
+          <h3 style="font-size:1.4rem;font-weight:800;color:#f4f4f5;margin-bottom:0.75rem;">${p.title || ''}</h3>
+          <p style="color:#8e8e93;font-size:0.92rem;line-height:1.6;margin-bottom:1.5rem;">${p.description || ''}</p>
+          <div style="margin-top:1rem;">
+            ${rowsHtml}
+          </div>
+        </div>
+        <button onclick="bookDirectWhatsApp('${p.whatsappMsg || p.title}')" style="margin-top:1.5rem;width:100%;padding:1rem;border-radius:14px;background:#25d366;color:#000;border:none;font-weight:800;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:0.6rem;transition:transform 0.2s, background 0.2s;">
+          <i class="fa-brands fa-whatsapp" style="font-size:1.2rem;"></i> Book on WhatsApp
+        </button>
+      `;
+      container.appendChild(card);
+    });
+  }
+
+  function renderReviews(reviews) {
+    const track = document.querySelector('.mono-review-track');
+    if (!track || !reviews || !reviews.length) return;
+
+    track.innerHTML = '';
+    reviews.forEach(r => {
+      const card = document.createElement('div');
+      card.className = 'mono-review';
+      card.innerHTML = `
+        <img class="mono-review-avatar" src="${r.avatar || 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80'}" alt="${r.name || 'Guest'}" loading="lazy">
+        <h3 style="font-size:1.15rem;font-weight:800;margin-bottom:0.25rem;color:#fff;">${r.name || 'Explorer'}</h3>
+        <div style="color:#fbbf24;font-size:0.85rem;margin-bottom:0.8rem;">
+          ${'<i class="fa-solid fa-star"></i>'.repeat(Math.min(5, r.rating || 5))}
+        </div>
+        <p style="color:#a1a1aa;font-size:0.92rem;line-height:1.6;">${r.text || ''}</p>
+      `;
+      track.appendChild(card);
+    });
+  }
+
+  function renderFaqs(faqs) {
+    const wrap = document.getElementById('scaled-faqs-wrapper') || document.querySelector('.mono-faq-list');
+    if (!wrap || !faqs || !faqs.length) return;
+
+    wrap.innerHTML = '';
+    faqs.forEach((faq) => {
+      const item = document.createElement('div');
+      item.className = 'faq-item-scaled';
+      item.innerHTML = `
+        <div class="faq-q-scaled" onclick="toggleFaq(this)">
+          ${faq.q || ''}
+          <i class="fa-solid fa-chevron-down"></i>
+        </div>
+        <div class="faq-a-scaled">${faq.a || ''}</div>
+      `;
+      wrap.appendChild(item);
+    });
+  }
+
+  function renderSocials(socials) {
+    const container = document.querySelector('.mono-socials');
+    if (!container || !socials || !socials.length) return;
+
+    container.innerHTML = '';
+    socials.forEach(s => {
+      const a = document.createElement('a');
+      a.href = s.url || '#';
+      a.target = '_blank';
+      a.setAttribute('aria-label', s.name || 'Social Link');
+      a.innerHTML = `<i class="${s.icon || 'fa-solid fa-link'}"></i>`;
+      container.appendChild(a);
+    });
+  }
+
+
+
+  // Firebase listener with fallback
+  if (isFirebaseAvailable && db) {
+    db.ref('websiteData').on('value', (snapshot) => {
+      const val = snapshot.val();
+      if (!val) {
+        renderPackages(BACKUP_DATA.packages);
+        renderReviews(BACKUP_DATA.reviews);
+        renderFaqs(BACKUP_DATA.faqs);
+        renderSocials(BACKUP_DATA.socialMedia);
+        return;
+      }
+
+      const toArr = (obj, fallback) => {
+        if (!obj) return fallback;
+        if (Array.isArray(obj)) return obj;
+        return Object.keys(obj).map(k => ({ id: k, ...obj[k] }));
+      };
+
+      renderPackages(toArr(val.packages, BACKUP_DATA.packages));
+      renderReviews(toArr(val.reviews, BACKUP_DATA.reviews));
+      renderFaqs(toArr(val.faqs, BACKUP_DATA.faqs));
+      renderSocials(toArr(val.socialMedia, BACKUP_DATA.socialMedia));
+
+      if (val.memories) {
+        const memArr = toArr(val.memories, BACKUP_DATA.memories);
+        if (window.updateDepthCarouselItems && typeof window.updateDepthCarouselItems === 'function') {
+          window.updateDepthCarouselItems(memArr);
+        }
+      }
+    }, (error) => {
+      console.warn("[XcurseWay] Firebase fallback active:", error);
+      renderPackages(BACKUP_DATA.packages);
+      renderReviews(BACKUP_DATA.reviews);
+      renderFaqs(BACKUP_DATA.faqs);
+      renderSocials(BACKUP_DATA.socialMedia);
+    });
+  } else {
+    renderPackages(BACKUP_DATA.packages);
+    renderReviews(BACKUP_DATA.reviews);
+    renderFaqs(BACKUP_DATA.faqs);
+    renderSocials(BACKUP_DATA.socialMedia);
+  }
+
+  // Liquid Glass Ring Parallax (Item 15)
+  function initGlassRingParallax() {
+    const wrap = document.getElementById('glassRingParallaxWrap');
+    const canvas = document.getElementById('glassRingCanvas');
+    const whySection = document.getElementById('why-choose-us');
+    const planSection = document.getElementById('plan-easy');
+    const planBadge = document.querySelector('.circular-loop-wrap');
+
+    if (!wrap || !canvas || !whySection || !planSection) return;
+
+    const ctx = canvas.getContext('2d');
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
+
+    window.addEventListener('resize', () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    }, { passive: true });
+
+    let ringState = {
+      progress: 0,
+      rotation: 0,
+      opacity: 0,
+      x: width * 0.85,
+      y: height * 0.15,
+      radius: Math.min(width, height) * 0.16
+    };
+
+    function drawGlassRing() {
+      if (ringState.opacity <= 0.01) {
+        ctx.clearRect(0, 0, width, height);
+        requestAnimationFrame(drawGlassRing);
+        return;
+      }
+
+      ctx.clearRect(0, 0, width, height);
+      ctx.save();
+      ctx.globalAlpha = ringState.opacity;
+      ctx.translate(ringState.x, ringState.y);
+      ctx.rotate(ringState.rotation);
+
+      const r = ringState.radius;
+      const tube = r * 0.32;
+
+      // Glow gradient matching GlassRing.html
+      const grad = ctx.createRadialGradient(0, 0, r - tube, 0, 0, r + tube);
+      grad.addColorStop(0, 'rgba(255, 255, 255, 0.05)');
+      grad.addColorStop(0.5, 'rgba(180, 220, 255, 0.45)');
+      grad.addColorStop(0.8, 'rgba(255, 255, 255, 0.85)');
+      grad.addColorStop(1, 'rgba(255, 255, 255, 0)');
+
+      ctx.beginPath();
+      ctx.arc(0, 0, r, 0, Math.PI * 2);
+      ctx.lineWidth = tube;
+      ctx.strokeStyle = grad;
+      ctx.shadowColor = 'rgba(100, 200, 255, 0.5)';
+      ctx.shadowBlur = 24;
+      ctx.stroke();
+
+      // Specular highlight
+      ctx.beginPath();
+      ctx.arc(0, 0, r + tube * 0.4, -0.8, 0.8);
+      ctx.lineWidth = 3;
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.95)';
+      ctx.shadowBlur = 12;
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.arc(0, 0, r - tube * 0.4, Math.PI - 0.8, Math.PI + 0.8);
+      ctx.lineWidth = 2.5;
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.7)';
+      ctx.stroke();
+
+      ctx.restore();
+      ringState.rotation += 0.008;
+      requestAnimationFrame(drawGlassRing);
+    }
+    requestAnimationFrame(drawGlassRing);
+
+    function updateRingParallax() {
+      const whyRect = whySection.getBoundingClientRect();
+      const planRect = planSection.getBoundingClientRect();
+      const vh = window.innerHeight;
+
+      const start = whyRect.top;
+      const totalDistance = (planRect.top + planRect.height * 0.5) - whyRect.top;
+
+      if (start > vh || planRect.bottom < 0) {
+        wrap.style.opacity = '0';
+        ringState.opacity = 0;
+        return;
+      }
+
+      const current = vh * 0.6 - start;
+      let p = current / Math.max(1, totalDistance);
+      p = Math.max(0, Math.min(1, p));
+
+      wrap.style.opacity = '1';
+
+      const startX = width * 0.92;
+      const startY = height * 0.12;
+
+      let targetX = width * 0.5;
+      let targetY = height * 0.5;
+      if (planBadge) {
+        const bRect = planBadge.getBoundingClientRect();
+        targetX = bRect.left + bRect.width * 0.5;
+        targetY = bRect.top + bRect.height * 0.5;
+      }
+
+      ringState.x = startX + (targetX - startX) * p;
+      ringState.y = startY + (targetY - startY) * p;
+
+      const startRadius = Math.min(width, height) * 0.22;
+      const endRadius = 55;
+      ringState.radius = startRadius + (endRadius - startRadius) * p;
+
+      if (p < 0.15) {
+        ringState.opacity = p / 0.15;
+      } else if (p > 0.85) {
+        ringState.opacity = Math.max(0, (1 - p) / 0.15);
+      } else {
+        ringState.opacity = 0.95;
+      }
+    }
+
+    updateRingParallax();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initGlassRingParallax);
+  } else {
+    initGlassRingParallax();
+  }
+
+})();
+</script>
+
+</body>
+</html>
